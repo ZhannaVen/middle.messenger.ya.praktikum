@@ -1,0 +1,62 @@
+<div class="app">
+    <main class="profile-container">
+        <div class="profile-wrapper">
+            <!-- Аватар пользователя -->
+            <div class="profile-avatar">
+                <img src="" alt="avatar">
+            </div>
+
+            <!-- Имя пользователя -->
+            <h2 class="profile-name">{{login}}</h2>
+
+            <table class="profile-change-info">
+                <tr>
+                    <th class="label">Label</th>
+                    <th class="value">Value</th>
+                </tr>
+                <tbody>
+                <tr>
+                    <td class="left-td">Почта</td>
+                    <td class="right-td">
+                        {{> Input id="post-input" name="email" type="text" placeholder="ivan@ya.ru"}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="left-td">Логин</td>
+                    <td class="right-td">
+                        {{> Input id="login-input" name="login" type="text" placeholder="ivanivan"}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="left-td">Имя</td>
+                    <td class="right-td">
+                        {{> Input id="firstname-input" name="first_name" type="text" placeholder="Иван"}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="left-td">Фамилия</td>
+                    <td class="right-td">
+                        {{> Input id="lastname-input" name="second_name" type="text" placeholder="Иванов"}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="left-td">Имя в чате</td>
+                    <td class="right-td">
+                        {{> Input id="chat-login-input" name="display_name" type="text" placeholder="Иван"}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="left-td">Телефон</td>
+                    <td class="right-td">
+                        {{> Input id="phone-input" name="phone" type="text" placeholder="89153456789"}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <!-- Действия пользователя -->
+            <div class="profile-actions">
+                {{> Button id="submit-new-data" text="Сохранить" }}
+            </div>
+        </div>
+    </main>
+</div>

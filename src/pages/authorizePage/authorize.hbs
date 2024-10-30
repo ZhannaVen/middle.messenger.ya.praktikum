@@ -1,0 +1,13 @@
+<div class="app">
+    <main class="login-container">
+        <h1>Вход</h1>
+        <form class="login-form">
+            {{> Label forAttr="login-input" text="Логин"}}
+            {{> Input id="login-input" name="login" type="text" placeholder="ivanivanov"}}
+            {{> Label forAttr="password-input" text="Пароль"}}
+            {{> Input id="password-input" name="password" type="text" placeholder="***********"}}
+            {{> Button id="submit-authorization" text="Авторизоваться" }}
+            {{> Link class="register-link" href="#" data-page="register" text="Нет аккаунта?" }}
+        </form>
+    </main>
+</div>
