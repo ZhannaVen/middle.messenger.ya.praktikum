@@ -2,22 +2,22 @@
     <main class="login-container">
         <h1>Регистрация</h1>
         <form class="login-form">
-            {{> Label forAttr="post-input" text="Почта"}}
+            {{> Index forAttr="post-input" text="Почта"}}
             {{> Input id="post-input" name="email" type="text" placeholder="pochta@yandex.ru"}}
-            {{> Label forAttr="login-input" text="Логин"}}
+            {{> Index forAttr="login-input" text="Логин"}}
             {{> Input id="login-input" name="login" type="text" placeholder="ivanivanov"}}
-            {{> Label forAttr="firstname-input" text="Имя"}}
+            {{> Index forAttr="firstname-input" text="Имя"}}
             {{> Input id="firstname-input" name="first_name" type="text" placeholder="Иван"}}
-            {{> Label forAttr="lastname-input" text="Фамилия"}}
+            {{> Index forAttr="lastname-input" text="Фамилия"}}
             {{> Input id="lastname-input" name="second_name" type="text" placeholder="Иванов"}}
-            {{> Label forAttr="phone-input" text="Телефон"}}
+            {{> Index forAttr="phone-input" text="Телефон"}}
             {{> Input id="phone-input" name="phone" type="text" placeholder="+7 (909) 967 30 30"}}
-            {{> Label forAttr="password-input" text="Пароль"}}
+            {{> Index forAttr="password-input" text="Пароль"}}
             {{> Input id="password-input" name="password" type="text" placeholder="***********"}}
-            {{> Label forAttr="password2-input" text="Пароль (еще раз)"}}
+            {{> Index forAttr="password2-input" text="Пароль (еще раз)"}}
             {{> Input id="password2-input" name="password" type="text" placeholder="***********"}}
-            {{> Button id="submit-register" text="Зарегистрироваться" }}
-            {{> Link class="login-link" href="#" data-page="authorize" text="Войти" }}
+            {{> Index id="submit-register" text="Зарегистрироваться" }}
+            {{> Index class="login-link" href="#" data-page="authorize" text="Войти" }}
         </form>
     </main>
 </div>
