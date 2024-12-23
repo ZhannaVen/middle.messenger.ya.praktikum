@@ -1,4 +1,3 @@
-import './helpers/handlebarsHelpers';
 import {AuthorizePage} from './pages/authorizePage';
 import {RegisterPage} from './pages/registerPage';
 import {ChatsPage} from "./pages/ChatsPage";
