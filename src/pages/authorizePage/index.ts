@@ -3,8 +3,10 @@ import {Link} from '../../components/Link';
 import {Label} from '../../components/Label';
 import {Input} from '../../components/Input';
 import {Button} from '../../components/Button';
+import {errorMessage} from "../../components/errorMessage";
 import * as utils from "../../utils/validators";
 import {getFormData} from "../../utils/helpFunctions";
+import * as messages from "../../utils/constances";
 
 
 
@@ -24,13 +26,20 @@ export class AuthorizePage extends Block {
                     console.log('login blur');
                     const loginValue = (event.target as HTMLInputElement).value;
                     if (utils.validateLogin(loginValue)) {
-                        console.log('Login is valid');
+                        console.log('Login is valid')
+                        this.children.errorMessageLogin.setProps({error: ""});
+
                     } else {
                         console.log('Login is invalid');
+                        this.children.errorMessageLogin.setProps({error: messages.wrongLogin})
+
                     }
                     event.preventDefault();
                     event.stopPropagation();
                 },
+            }),
+            errorMessageLogin: new errorMessage({
+                error: ""
             }),
             passwordLabel: new Label({
                 forAttr: "password-input",
@@ -46,12 +55,17 @@ export class AuthorizePage extends Block {
                     const passwordValue = (event.target as HTMLInputElement).value;
                     if (utils.validatePassword(passwordValue)) {
                         console.log('Password is valid');
+                        this.children.errorMessagePassword.setProps({error: ""});
                     } else {
                         console.log('Password name invalid');
+                        this.children.errorMessagePassword.setProps({error: messages.wrongPassword});
                     }
                     event.preventDefault();
                     event.stopPropagation();
                 },
+            }),
+            errorMessagePassword: new errorMessage({
+                error: ""
             }),
             authorizeButton: new Button({
                 id:"submit-authorization",
@@ -103,8 +117,10 @@ export class AuthorizePage extends Block {
                        <form class="login-form">
                          {{{ loginLabel }}}
                          {{{ loginInput }}}
+                         {{{ errorMessageLogin }}}
                          {{{ passwordLabel }}}
                          {{{ passwordInput }}}
+                         {{{ errorMessagePassword }}}
                          {{{ authorizeButton }}}
                          {{{ registerLink }}}
                        </form>

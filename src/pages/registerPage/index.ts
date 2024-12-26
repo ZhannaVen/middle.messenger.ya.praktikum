@@ -3,7 +3,9 @@ import {Link} from '../../components/Link';
 import {Label} from '../../components/Label';
 import {Input} from '../../components/Input';
 import {Button} from '../../components/Button';
+import {errorMessage} from "../../components/errorMessage";
 import * as utils from '../../utils/validators'
+import * as messages from '../../utils/constances'
 import {getFormData} from "../../utils/helpFunctions";
 
 
@@ -24,12 +26,17 @@ export class RegisterPage extends Block {
                     const emailValue = (event.target as HTMLInputElement).value;
                     if (utils.validateEmail(emailValue)) {
                         console.log('Email is valid');
+                        this.children.errorMessageEmail.setProps({error: ""});
                     } else {
                         console.log('Email is invalid');
+                        this.children.errorMessageEmail.setProps({error: messages.wrongEmail})
                     }
                     event.preventDefault();
                     event.stopPropagation();
                 },
+            }),
+            errorMessageEmail: new errorMessage({
+                error: ""
             }),
             loginLabel: new Label({
                 for:"login-input",
@@ -45,12 +52,17 @@ export class RegisterPage extends Block {
                     const loginValue = (event.target as HTMLInputElement).value;
                     if (utils.validateLogin(loginValue)) {
                         console.log('Login is valid');
+                        this.children.errorMessageLogin.setProps({error: ""});
                     } else {
                         console.log('Login is invalid');
+                        this.children.errorMessageLogin.setProps({error: messages.wrongLogin})
                     }
                     event.preventDefault();
                     event.stopPropagation();
                 },
+            }),
+            errorMessageLogin: new errorMessage({
+                error: ""
             }),
             firstnameLabel: new Label({
                 for:"firstname-input",
@@ -66,12 +78,17 @@ export class RegisterPage extends Block {
                     const firstNameValue = (event.target as HTMLInputElement).value;
                     if (utils.validateName(firstNameValue)) {
                         console.log('First name is valid');
+                        this.children.errorMessageFirstname.setProps({error: ""});
                     } else {
                         console.log('First name invalid');
+                        this.children.errorMessageFirstname.setProps({error: messages.wrongName})
                     }
                     event.preventDefault();
                     event.stopPropagation();
                 },
+            }),
+            errorMessageFirstname: new errorMessage({
+                error: ""
             }),
             lastnameLabel: new Label({
                 for:"lastname-input",
@@ -87,12 +104,17 @@ export class RegisterPage extends Block {
                     const lastNameValue = (event.target as HTMLInputElement).value;
                     if (utils.validateName(lastNameValue)) {
                         console.log('Last name is valid');
+                        this.children.errorMessageLastname.setProps({error: ""});
                     } else {
                         console.log('Last name invalid');
+                        this.children.errorMessageLastname.setProps({error: messages.wrongName})
                     }
                     event.preventDefault();
                     event.stopPropagation();
                 },
+            }),
+            errorMessageLastname: new errorMessage({
+                error: ""
             }),
             phoneLabel: new Label({
                 for:"phone-input",
@@ -108,12 +130,17 @@ export class RegisterPage extends Block {
                     const phoneValue = (event.target as HTMLInputElement).value;
                     if (utils.validatePhone(phoneValue)) {
                         console.log('Phone is valid');
+                        this.children.errorMessagePhone.setProps({error: ""});
                     } else {
                         console.log('Phone name invalid');
+                        this.children.errorMessagePhone.setProps({error: messages.wrongPhone})
                     }
                     event.preventDefault();
                     event.stopPropagation();
                 },
+            }),
+            errorMessagePhone: new errorMessage({
+                error: ""
             }),
             passwordLabel: new Label({
                 for:"password-input",
@@ -129,12 +156,17 @@ export class RegisterPage extends Block {
                     const passwordValue = (event.target as HTMLInputElement).value;
                     if (utils.validatePassword(passwordValue)) {
                         console.log('Password is valid');
+                        this.children.errorMessagePassword.setProps({error: ""});
                     } else {
                         console.log('Password name invalid');
+                        this.children.errorMessagePassword.setProps({error: messages.wrongPassword})
                     }
                     event.preventDefault();
                     event.stopPropagation();
                 },
+            }),
+            errorMessagePassword: new errorMessage({
+                error: ""
             }),
             password2Label: new Label({
                 for:"password2-input",
@@ -151,12 +183,17 @@ export class RegisterPage extends Block {
                     const password2Value = (event.target as HTMLInputElement).value;
                     if (password1Value === password2Value) {
                         console.log('Пароли совпадают');
+                        this.children.errorMessagePassword2.setProps({error: ""});
                     } else {
                         console.log('Пароли не сопадают');
+                        this.children.errorMessagePassword2.setProps({error: messages.wrongPassword2})
                     }
                     event.preventDefault();
                     event.stopPropagation();
                 },
+            }),
+            errorMessagePassword2: new errorMessage({
+                error: ""
             }),
             registerButton: new Button({
                 text: "Зарегистрироваться",
@@ -217,18 +254,25 @@ export class RegisterPage extends Block {
                             <div class="register-inputs">
                               {{{ emailLabel }}}
                               {{{ emailInput }}}
+                              {{{ errorMessageEmail }}}
                               {{{ loginLabel }}}
                               {{{ loginInput }}}
+                              {{{ errorMessageLogin }}}
                               {{{ firstnameLabel }}}
                               {{{ firstnameInput }}}
+                              {{{ errorMessageFirstname }}}
                               {{{ lastnameLabel }}}
                               {{{ lastnameInput }}}
+                              {{{ errorMessageLastname }}}
                               {{{ phoneLabel }}}
                               {{{ phoneInput }}}
+                              {{{ errorMessagePhone }}}
                               {{{ passwordLabel }}}
                               {{{ passwordInput }}}
+                              {{{ errorMessagePassword }}}
                               {{{ password2Label }}}
                               {{{ password2Input }}}
+                              {{{ errorMessagePassword2 }}}
                             </div>
                               {{{ registerButton }}}
                               {{{ registerLink }}}

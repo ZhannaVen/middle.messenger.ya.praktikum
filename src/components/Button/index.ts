@@ -1,6 +1,13 @@
 import Block from '../../services/Block';
 
-export class Button extends Block {
+interface ButtonProps {
+    id?: string; // Делается необязательным, если кнопка может быть без id
+    text: string; // Текст кнопки
+    onClick: (e: Event) => void; // Обработчик события click
+    events?: Record<string, (e: Event) => void>; // Вспомогательное поле для событий
+}
+
+export class Button extends Block<ButtonProps> {
     constructor(props: any) {
         super({
             ...props,
@@ -18,7 +25,7 @@ export class Button extends Block {
              id="{{ id }}"
              type="submit"
              >
-             {{ text }}
+                {{ text }}
              </button>`;
     }
 }

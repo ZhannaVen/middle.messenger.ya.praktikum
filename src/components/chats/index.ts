@@ -1,6 +1,11 @@
 import Block from '../../services/Block';
 
-export class Chats extends Block {
+interface ChatsProps {
+    chats: { id: string; user: string }[];
+    [key: string]: any;
+}
+
+export class Chats extends Block<ChatsProps> {
     constructor(props: any) {
         super({
             ...props,
@@ -25,12 +30,19 @@ export class Chats extends Block {
     }
 }
 
-export class ActiveChat extends Block {
+interface ActiveChatProps {
+    id: string;
+    user: string;
+    messages: string[];
+    [key: string]: any;
+}
+
+export class ActiveChat extends Block<ActiveChatProps> {
     constructor(props: any) {
         super({
             ...props,
             lists: {
-                messages: props.messages,  // Передаем список сообщений в lists
+                messages: props.messages,
             },
         });
     }
