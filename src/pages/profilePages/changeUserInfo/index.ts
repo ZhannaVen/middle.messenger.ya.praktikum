@@ -3,6 +3,8 @@ import {mockProfile} from "../../../utils/mockProfile";
 import {Input} from "../../../components/Input";
 import * as utils from "../../../utils/validators";
 import {Button} from "../../../components/Button";
+import {errorMessage} from "../../../components/errorMessage";
+import * as messages from "../../../utils/constances";
 
 
 export class ChangeProfileDataPage extends Block {
@@ -70,13 +72,18 @@ export class ChangeProfileDataPage extends Block {
                     if (emailValue) {
                         if (utils.validateEmail(emailValue)) {
                             console.log('Email is valid');
+                            this.children.errorMessageEmail.setProps({error: ""});
                         } else {
                             console.log('Email is invalid');
+                            this.children.errorMessageEmail.setProps({error: messages.wrongEmail})
                         }
                     }
                     event.preventDefault();
                     event.stopPropagation();
                 },
+            }),
+            errorMessageEmail: new errorMessage({
+                error: ""
             }),
             loginInput: new Input({
                 id: "profile-login-input",
@@ -89,13 +96,18 @@ export class ChangeProfileDataPage extends Block {
                     if (loginValue) {
                         if (utils.validateLogin(loginValue)) {
                             console.log('Login is valid');
+                            this.children.errorMessageLogin.setProps({error: ""});
                         } else {
                             console.log('Login is invalid');
+                            this.children.errorMessageLogin.setProps({error: messages.wrongLogin})
                         }
                     }
                     event.preventDefault();
                     event.stopPropagation();
                 },
+            }),
+            errorMessageLogin: new errorMessage({
+                error: ""
             }),
             firstNameInput: new Input({
                 id: "profile-firstname-input",
@@ -108,13 +120,18 @@ export class ChangeProfileDataPage extends Block {
                     if (firstNameValue) {
                         if (utils.validateName(firstNameValue)) {
                             console.log('First name is valid');
+                            this.children.errorMessageFirstname.setProps({error: ""});
                         } else {
                             console.log('First name invalid');
+                            this.children.errorMessageFirstname.setProps({error: messages.wrongName})
                         }
                     }
                     event.preventDefault();
                     event.stopPropagation();
                 },
+            }),
+            errorMessageFirstname: new errorMessage({
+                error: ""
             }),
             lastNameInput: new Input({
                 id: "profile-lastname-input",
@@ -127,13 +144,18 @@ export class ChangeProfileDataPage extends Block {
                     if (lastNameValue) {
                         if (utils.validateName(lastNameValue)) {
                             console.log('Last name is valid');
+                            this.children.errorMessageLastname.setProps({error: ""});
                         } else {
                             console.log('Last name invalid');
+                            this.children.errorMessageLastname.setProps({error: messages.wrongName})
                         }
                     }
                     event.preventDefault();
                     event.stopPropagation();
                 },
+            }),
+            errorMessageLastname: new errorMessage({
+                error: ""
             }),
             phoneInput: new Input({
                 id: "profile-phone-input",
@@ -146,13 +168,18 @@ export class ChangeProfileDataPage extends Block {
                     if (phoneValue) {
                         if (utils.validatePhone(phoneValue)) {
                             console.log('Phone is valid');
+                            this.children.errorMessagePhone.setProps({error: ""});
                         } else {
                             console.log('Phone name invalid');
+                            this.children.errorMessagePhone.setProps({error: messages.wrongPhone})
                         }
                     }
                     event.preventDefault();
                     event.stopPropagation();
                 },
+            }),
+            errorMessagePhone: new errorMessage({
+                error: ""
             }),
             chatLoginInput: new Input({
                 id: "profile-chatName-input",
@@ -189,24 +216,28 @@ export class ChangeProfileDataPage extends Block {
                                             <td>Почта</td>
                                             <td class="value">
                                             {{{ emailInput }}}
+                                             {{{ errorMessageEmail }}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Логин</td>
                                             <td class="value">
                                             {{{ loginInput }}}
+                                            {{{ errorMessageLogin }}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Имя</td>
                                             <td class="value">
                                             {{{ firstNameInput }}}
+                                            {{{ errorMessageFirstname }}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Фамилия</td>
                                             <td class="value">
                                             {{{ lastNameInput }}}
+                                            {{{ errorMessageLastname }}}
                                             </td>
                                         </tr>
                                         <tr>
@@ -219,6 +250,7 @@ export class ChangeProfileDataPage extends Block {
                                             <td>Телефон</td>
                                             <td class="value">
                                             {{{ phoneInput }}}
+                                            {{{ errorMessagePhone }}}
                                             </td>
                                         </tr>
                                     </tbody>

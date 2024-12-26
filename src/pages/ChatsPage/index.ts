@@ -3,8 +3,10 @@ import {Link} from '../../components/Link';
 import {Input} from '../../components/Input';
 import {Button} from '../../components/Button';
 import {ActiveChat, Chats} from "../../components/chats";
+import {errorMessage} from "../../components/errorMessage";
 import * as utils from '../../utils/validators'
 import * as mockChats from '../../utils/mockChats'
+import * as messages from "../../utils/constances";
 
 
 export class ChatsPage extends Block {
@@ -40,12 +42,17 @@ export class ChatsPage extends Block {
                     const messageValue = (event.target as HTMLInputElement).value;
                     if (utils.validateMessage(messageValue)) {
                         console.log('Message is valid');
+                        this.children.errorMessage.setProps({error: ""});
                     } else {
                         console.log('Message is invalid');
+                        this.children.errorMessage.setProps({error: messages.wrongMessage});
                     }
                     event.preventDefault();
                     event.stopPropagation();
                 },
+            }),
+            errorMessage: new errorMessage({
+                error: ""
             }),
             sendButton: new Button({
                 id:"send-message",
@@ -79,6 +86,7 @@ export class ChatsPage extends Block {
                                 {{{ activeChat }}}
                                 <form class="messenger-input">
                                     {{{ messageInput }}}
+                                    {{{ errorMessage }}}
                                     {{{ sendButton }}}
                                 </form>
                             </div>

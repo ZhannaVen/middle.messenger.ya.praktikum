@@ -5,7 +5,7 @@ interface BlockProps {
     [key: string]: any;
 }
 
-export default class Block {
+export default abstract class Block<Props extends Record<string, any> = Record<string, any>> {
     static EVENTS = {
         INIT: 'init',
         FLOW_CDM: 'flow:component-did-mount',
@@ -17,7 +17,7 @@ export default class Block {
 
     protected _id: number = Math.floor(100000 + Math.random() * 900000);
 
-    protected props: BlockProps;
+    protected props: Props;
 
     protected children: Record<string, Block>;
 
@@ -41,6 +41,15 @@ export default class Block {
         Object.keys(events).forEach(eventName => {
             if (this._element) {
                 this._element.addEventListener(eventName, events[eventName]);
+            }
+        });
+    }
+
+    private _removeEvents(): void {
+        const { events = {} } = this.props;
+        Object.keys(events).forEach(eventName => {
+            if (this._element && events[eventName] !== undefined) {
+                this._element.removeEventListener(eventName, events[eventName]);
             }
         });
     }
@@ -77,7 +86,7 @@ export default class Block {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     protected componentDidUpdate(oldProps: BlockProps, newProps: BlockProps): boolean {
-        console.log(oldProps, newProps);
+        console.log('Updated:', oldProps, newProps);
         return true;
     }
 
@@ -144,7 +153,10 @@ export default class Block {
 
     private _render(): void {
         console.log('Render');
-        const propsAndStubs = { ...this.props };
+
+        this._removeEvents();
+
+        const propsAndStubs = { ...this.props } as Record<string, any>;
         const tmpId =  Math.floor(100000 + Math.random() * 900000);
         Object.entries(this.children).forEach(([key, child]) => {
             propsAndStubs[key] = `<div data-id="${child._id}"></div>`;

@@ -3,6 +3,8 @@ import {mockProfile} from "../../../utils/mockProfile";
 import {Input} from "../../../components/Input";
 import * as utils from "../../../utils/validators";
 import {Button} from "../../../components/Button";
+import {errorMessage} from "../../../components/errorMessage";
+import * as messages from "../../../utils/constances";
 
 
 export class ChangePasswordPage extends Block {
@@ -59,12 +61,17 @@ export class ChangePasswordPage extends Block {
                     const passwordValue = (event.target as HTMLInputElement).value;
                     if (utils.validatePassword(passwordValue)) {
                         console.log('Password is valid');
+                        this.children.errorMessageNewPassword.setProps({error: ""});
                     } else {
                         console.log('Password name invalid');
+                        this.children.errorMessageNewPassword.setProps({error: messages.wrongPassword})
                     }
                     event.preventDefault();
                     event.stopPropagation();
                 },
+            }),
+            errorMessageNewPassword: new errorMessage({
+                error: ""
             }),
             newPassword2Input: new Input({
                 id: "profile-newpassword2-input",
@@ -77,12 +84,17 @@ export class ChangePasswordPage extends Block {
                     const password2Value = (event.target as HTMLInputElement).value;
                     if (password1Value === password2Value) {
                         console.log('Пароли совпадают');
+                        this.children.errorMessageNewPassword2.setProps({error: ""});
                     } else {
                         console.log('Пароли не сопадают');
+                        this.children.errorMessageNewPassword.setProps({error: messages.wrongPassword2})
                     }
                     event.preventDefault();
                     event.stopPropagation();
                 },
+            }),
+            errorMessageNewPassword2: new errorMessage({
+                error: ""
             }),
         });
     }
@@ -111,12 +123,14 @@ export class ChangePasswordPage extends Block {
                                             <td>Новый пароль</td>
                                             <td class="value">
                                                 {{{ newPasswordInput }}}
+                                                {{{ errorMessageNewPassword }}}
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Повторите новый пароль</td>
                                             <td class="value">
                                                 {{{ newPassword2Input }}}
+                                                {{{ errorMessageNewPassword2 }}}
                                             </td>
                                         </tr>
                                     </tbody>

@@ -9,7 +9,7 @@ type Method = keyof typeof METHODS;
 
 interface RequestOptions {
     headers?: Record<string, string>;
-    method: Method;
+    method?: Method;
     data?: Record<string, any> | FormData;
     timeout?: number;
 }
@@ -25,28 +25,30 @@ function queryStringify(data: Record<string, any>): string {
     }, '?');
 }
 
+type HTTPMethod = <R = XMLHttpRequest>(url: string, options?: RequestOptions) => Promise<R>;
+
 class HTTPTransport {
-    get(url: string, options: RequestOptions = { method: METHODS.GET }): Promise<XMLHttpRequest> {
-        return this.request(url, options, options.timeout);
-    }
 
-    post(url: string, options: RequestOptions = { method: METHODS.POST }): Promise<XMLHttpRequest> {
-        return this.request(url, options, options.timeout);
-    }
+    get: HTTPMethod = (url, options = {}) =>
+        this.request(url, { ...options, method: METHODS.GET }, options.timeout);
 
-    put(url: string, options: RequestOptions = { method: METHODS.PUT }): Promise<XMLHttpRequest> {
-        return this.request(url, options, options.timeout);
-    }
+    post: HTTPMethod = (url, options = {}) => (
+        this.request(url, {...options, method: METHODS.POST}, options.timeout)
+    )
 
-    delete(url: string, options: RequestOptions = { method: METHODS.DELETE }): Promise<XMLHttpRequest> {
-        return this.request(url, options, options.timeout);
-    }
+    put: HTTPMethod = (url, options = {}) => (
+        this.request(url, {...options, method: METHODS.PUT}, options.timeout)
+    )
 
-    private request(
+    delete: HTTPMethod = (url, options = {}) => (
+        this.request(url, {...options, method: METHODS.DELETE}, options.timeout)
+    )
+
+    private request<R = XMLHttpRequest>(
         url: string,
         options: RequestOptions = { method: METHODS.GET },
         timeout: number = 5000
-    ): Promise<XMLHttpRequest> {
+    ): Promise<R> {
         const { headers = {}, method, data } = options;
 
         return new Promise((resolve, reject) => {
@@ -67,7 +69,7 @@ class HTTPTransport {
                 xhr.setRequestHeader(key, headers[key]);
             });
 
-            xhr.onload = () => resolve(xhr);
+            xhr.onload = () => resolve(xhr as R);
             xhr.onabort = reject;
             xhr.onerror = reject;
 
