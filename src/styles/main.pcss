@@ -1,14 +1,14 @@
 :root {
   --primary-color: #3369F3;
-  --secondary-color: rgba(18, 190, 253, 0.5);
+  --secondary-color: rgb(18 190 253 / 50%);
   --background-color: #f5f5f5;
-  --text-color: #000000;
+  --text-color: #000;
   --error-color: #e74c3c;
   --important-color: #d92311;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: Inter, sans-serif;
   font-weight: 500;
   color: var(--text-color);
   font-size: 13px;
@@ -56,12 +56,6 @@ body {
   box-shadow: 0 0 6px 0 #00000024;
 }
 
-.profile-container {
-  width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
 .messenger-container {
   display: grid;
   grid-template-columns: 300px 1fr;
@@ -69,7 +63,7 @@ body {
   width: 80%;
   background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgb(0 0 0 / 10%);
   overflow: hidden;
 }
 
@@ -105,14 +99,14 @@ body {
   padding: 10px;
   border-radius: 5px;
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .chat-item:hover {
   background-color: #e9ecef;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
 }
 
 .messenger-right-side {
@@ -127,11 +121,11 @@ body {
   padding: 20px;
   //overflow-y: auto;
   width: 100%;
-  max-width: 800px; /* Ограничение ширины */
-  margin: 0 auto; /* Центрирование */
+  max-width: 800px;
+  margin: 0 auto;
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
 }
 
 .active-chat h3 {
@@ -156,7 +150,6 @@ body {
   line-height: 1.5;
 }
 
-/* Форма отправки сообщений */
 .messenger-input {
   display: flex;
   padding: 10px;
@@ -211,7 +204,7 @@ label {
   width: 27px;
   height: 9px;
   font-size: 9px;
-  color: #999999;
+  color: #999;
 
 }
 
@@ -257,14 +250,8 @@ img {
   margin-top: 20px;
 }
 
-.input--error {
+.input-error {
   border-color: red;
-}
-
-.input-error-text {
-  color: red;
-  font-size: 12px;
-  margin-top: 4px;
 }
 
 .profile-container {
@@ -277,6 +264,7 @@ img {
   max-width: 900px;
   padding: 20px;
   height: 720px;
+  margin: 0 auto;
 }
 
 .profile-left-side {
@@ -367,13 +355,9 @@ img {
   margin-top: 5px;
 }
 
-
-
-
-
 .chat-header {
   display: flex;
-  align-items: center; /* Выравниваем по вертикали */
+  align-items: center;
   justify-content: space-between;
   padding: 16px;
   font-weight: bold;
@@ -406,20 +390,19 @@ img {
 }
 
 #menu-button:hover {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgb(0 0 0 / 10%);
 }
 
-/* Стили для Popup */
 .Popup {
-  display: none; /* Скрыт по умолчанию */
+  display: none;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(240, 240, 240, 0.95);
+  background: rgb(240 240 240 / 95%);
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 20%);
   width: 300px;
   max-width: 90%;
   text-align: center;
@@ -464,7 +447,7 @@ body.popup-active::after {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgb(0 0 0 / 50%);
   z-index: 999;
 }
 
