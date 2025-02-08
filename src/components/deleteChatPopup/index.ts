@@ -12,7 +12,7 @@ export class DeleteChatPopup extends Block<ChatPopupProps> {
 
     override render(): string {
         return `
-                 <div class="Popup">
+                 <div class="popup">
                     {{{ someText }}}
                     {{{ deleteButton }}}
                     {{{ closeButton }}}

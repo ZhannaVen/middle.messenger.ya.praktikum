@@ -12,7 +12,7 @@ export class Popup extends Block<PopupProps> {
 
     override render(): string {
         return `
-                 <div class="Popup">
+                 <div class="popup">
                     {{{ someLabel }}}
                     {{{ someInput }}}
                     {{{ someButton }}}
