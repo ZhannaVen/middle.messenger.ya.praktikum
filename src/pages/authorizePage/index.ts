@@ -8,10 +8,9 @@ import * as utils from "../../utils/validators";
 import {getFormData} from "../../utils/helpFunctions";
 import * as messages from "../../utils/constances";
 import {AuthController} from "../../controllers/auth-controller";
-import {SignInData, Urls} from '../../utils/types';
+import {SignInData} from '../../utils/types';
 import {State} from "../../services/Store";
 import {connect} from "../../services/HOC";
-import router from "../../services/Router";
 
 
 export class AuthorizePage extends Block {
@@ -76,7 +75,6 @@ export class AuthorizePage extends Block {
                 text:"Авторизоваться",
                 onClick: async (event: Event) => {
                     console.log('CLICK Submit button');
-                    // router.go(Urls.Chats);
                     const loginValue = (document.querySelector('#login-input') as HTMLInputElement).value;
                     const passwordValue = (document.querySelector('#password-input') as HTMLInputElement).value;
                     if (
