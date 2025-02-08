@@ -12,6 +12,7 @@ import { SignInData} from '../../utils/types';
 import {State} from "../../services/Store";
 import {connect} from "../../services/HOC";
 // import {ProfilePage} from "../profilePages/showUserInfo";
+import {Urls} from "../../utils/types";
 
 
 export class AuthorizePage extends Block {
@@ -76,25 +77,26 @@ export class AuthorizePage extends Block {
                 text:"Авторизоваться",
                 onClick: (event: Event) => {
                     console.log('CLICK Submit button');
-                    const loginValue = (document.querySelector('#login-input') as HTMLInputElement).value;
-                    const passwordValue = (document.querySelector('#password-input') as HTMLInputElement).value;
-                    if (
-                        (utils.validateLogin(loginValue)) &&
-                        (utils.validatePassword(passwordValue))
-                    ) {
-                        console.log('Данные провалидированы');
-                        console.log('Данные из формы:');
-                        const form = document.querySelector('.login-form') as HTMLFormElement;
-                        if (form) {
-                            const formData = getFormData(form);
-                            console.log(formData);
-                            AuthController.signin(formData as unknown as SignInData);
-                        }
-                    } else {
-                        console.log('Необходимо правильно заполнить данные');
-                    }
-                    event.preventDefault();
-                    event.stopPropagation();
+                    window.location.href = Urls.Chats;
+                    // const loginValue = (document.querySelector('#login-input') as HTMLInputElement).value;
+                    // const passwordValue = (document.querySelector('#password-input') as HTMLInputElement).value;
+                    // if (
+                    //     (utils.validateLogin(loginValue)) &&
+                    //     (utils.validatePassword(passwordValue))
+                    // ) {
+                    //     console.log('Данные провалидированы');
+                    //     console.log('Данные из формы:');
+                    //     const form = document.querySelector('.login-form') as HTMLFormElement;
+                    //     if (form) {
+                    //         const formData = getFormData(form);
+                    //         console.log(formData);
+                    //         AuthController.signin(formData as unknown as SignInData);
+                    //     }
+                    // } else {
+                    //     console.log('Необходимо правильно заполнить данные');
+                    // }
+                    // event.preventDefault();
+                    // event.stopPropagation();
                 }
             }),
             registerLink: new Link({
