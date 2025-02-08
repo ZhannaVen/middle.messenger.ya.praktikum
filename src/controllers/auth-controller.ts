@@ -11,6 +11,7 @@ export class AuthController {
             await authAPI.signin(data);
             await ChatsController.getChatsList()
             await this.fetchUser();
+            console.log("Сейчас перейду в чаты")
             router.go(Urls.Chats);
         } catch (error) {
             console.log(error, 'an error has occurred in signin');
