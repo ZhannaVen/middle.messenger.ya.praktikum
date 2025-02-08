@@ -30,3 +30,4 @@ export class Button extends Block<ButtonProps> {
              </button>`;
     }
 }
+
