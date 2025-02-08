@@ -95,8 +95,8 @@ export class AuthorizePage extends Block {
                     // } else {
                     //     console.log('Необходимо правильно заполнить данные');
                     // }
-                    // event.preventDefault();
-                    // event.stopPropagation();
+                    event.preventDefault();
+                    event.stopPropagation();
                 }
             }),
             registerLink: new Link({
