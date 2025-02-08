@@ -98,7 +98,7 @@ class Router {
         window.onpopstate = ((event: PopStateEvent) => {
             const target = event.currentTarget as Window; // Явное указание типа
             this._onRoute(target.location.pathname);
-        }).bind(this);
+        });
 
         this._onRoute(window.location.pathname);
     }
