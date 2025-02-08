@@ -202,7 +202,7 @@ export class RegisterPage extends Block {
             registerButton: new Button({
                 text: "Зарегистрироваться",
                 id: "submit-register",
-                onClick: (event: Event) => {
+                onClick: async (event: Event) => {
                     console.log('CLICK Submit button');
                     const emailValue = (document.querySelector('#email-input') as HTMLInputElement).value;
                     const loginValue = (document.querySelector('#login-input') as HTMLInputElement).value;
@@ -227,7 +227,7 @@ export class RegisterPage extends Block {
                             const formData = getFormData(form);
                             console.log(formData);
                             if (formData) {
-                                AuthController.signup(formData as unknown as SignUpData);
+                                await AuthController.signup(formData as unknown as SignUpData);
                             }
                         }
                     } else {
