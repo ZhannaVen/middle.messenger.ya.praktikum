@@ -8,6 +8,7 @@ export class AuthController {
 
     static async signin(data: SignInData) {
         try {
+            console.log("Я пришел в signin контроллер")
             await authAPI.signin(data);
             await ChatsController.getChatsList()
             await this.fetchUser();
