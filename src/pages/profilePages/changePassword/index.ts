@@ -5,17 +5,21 @@ import * as utils from "../../../utils/validators";
 import {Button} from "../../../components/Button";
 import {errorMessage} from "../../../components/errorMessage";
 import * as messages from "../../../utils/constances";
+import router from "../../../services/Router";
+import {Urls} from "../../../utils/types";
+import {ProfileController} from "../../../controllers/profile-controller";
+import { PasswordData } from '../../../utils/types';
 
 
 export class ChangePasswordPage extends Block {
-    constructor(changePage: (page: string) => void) {
+    constructor() {
         super({
             chatsButton: new Button({
                 text: "<-",
                 id: "chats-button",
                 onClick: (event: Event) => {
                     console.log('CLICK Chats button');
-                    changePage('chats');
+                    router.go(Urls.Chats)
                     event.preventDefault();
                     event.stopPropagation();
                 }
@@ -32,7 +36,13 @@ export class ChangePasswordPage extends Block {
                         (password1Value === password2Value)
                     ) {
                         console.log('Данные провалидированы');
-                        changePage('chats')
+                        const passwordData: PasswordData = {
+                            newPassword: (document.querySelector('#profile-newpassword-input') as HTMLInputElement).value,
+                            oldPassword: (document.querySelector('#profile-oldpassword-input') as HTMLInputElement).value,
+                        };
+                        if (passwordData) {
+                            ProfileController.changePassword(passwordData);
+                        }
                     } else {
                         console.log('Необходимо правильно заполнить данные');
                     }

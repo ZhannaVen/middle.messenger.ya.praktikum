@@ -1,10 +1,11 @@
 import Block from '../../services/Block';
 
 interface ButtonProps {
-    id?: string; // Делается необязательным, если кнопка может быть без id
-    text: string; // Текст кнопки
-    onClick: (e: Event) => void; // Обработчик события click
-    events?: Record<string, (e: Event) => void>; // Вспомогательное поле для событий
+    id?: string;
+    text: string;
+    onClick: (e: Event) => void;
+    events?: Record<string, (e: Event) => void>;
+    [key: string]: any;
 }
 
 export class Button extends Block<ButtonProps> {

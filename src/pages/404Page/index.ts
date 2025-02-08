@@ -1,23 +1,16 @@
 import Block from '../../services/Block';
 import {Link} from '../../components/Link';
-
+import {Urls} from "../../utils/types";
 
 
 export class NotFoundPage extends Block {
-    constructor(changePage: (page: string) => void) {
+    constructor() {
         super({
             chatsLink: new Link({
-                href: '#',
+                href: Urls.Chats,
                 'data-page': 'chats',
                 text: 'Назад к чатам',
                 class: 'chats-link',
-                onClick: (event: Event) => {
-                    console.log('CLICK');
-                    changePage('chats');
-                    event.preventDefault();
-                    event.stopPropagation();
-
-                },
             }),
         });
     }
