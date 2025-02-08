@@ -78,23 +78,23 @@ export class AuthorizePage extends Block {
                 onClick: async (event: Event) => {
                     console.log('CLICK Submit button');
                     router.go(Urls.Chats);
-                    // const loginValue = (document.querySelector('#login-input') as HTMLInputElement).value;
-                    // const passwordValue = (document.querySelector('#password-input') as HTMLInputElement).value;
-                    // if (
-                    //     (utils.validateLogin(loginValue)) &&
-                    //     (utils.validatePassword(passwordValue))
-                    // ) {
-                    //     console.log('Данные провалидированы');
-                    //     console.log('Данные из формы:');
-                    //     const form = document.querySelector('.login-form') as HTMLFormElement;
-                    //     if (form) {
-                    //         const formData = getFormData(form);
-                    //         console.log(formData);
-                    //         await AuthController.signin(formData as unknown as SignInData);
-                    //     }
-                    // } else {
-                    //     console.log('Необходимо правильно заполнить данные');
-                    // }
+                    const loginValue = (document.querySelector('#login-input') as HTMLInputElement).value;
+                    const passwordValue = (document.querySelector('#password-input') as HTMLInputElement).value;
+                    if (
+                        (utils.validateLogin(loginValue)) &&
+                        (utils.validatePassword(passwordValue))
+                    ) {
+                        console.log('Данные провалидированы');
+                        console.log('Данные из формы:');
+                        const form = document.querySelector('.login-form') as HTMLFormElement;
+                        if (form) {
+                            const formData = getFormData(form);
+                            console.log(formData);
+                            await AuthController.signin(formData as unknown as SignInData);
+                        }
+                    } else {
+                        console.log('Необходимо правильно заполнить данные');
+                    }
                     event.preventDefault();
                     event.stopPropagation();
                 }
