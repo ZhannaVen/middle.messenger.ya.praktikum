@@ -13,7 +13,7 @@ export class Label extends Block<LabelProps> {
         });
     }
 
-    override render() {
+    render() {
         return `<label 
              for="{{for}}" 
              class="label"

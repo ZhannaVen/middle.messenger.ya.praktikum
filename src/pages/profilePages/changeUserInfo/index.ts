@@ -5,25 +5,49 @@ import * as utils from "../../../utils/validators";
 import {Button} from "../../../components/Button";
 import {errorMessage} from "../../../components/errorMessage";
 import * as messages from "../../../utils/constances";
+import router from "../../../services/Router";
+import {ProfileData, Urls} from "../../../utils/types";
+import {ProfileController} from "../../../controllers/profile-controller";
+import {AvatarWithProps} from "../../../components/Avatar";
+import {AvatarChange} from "../../../components/AvatarChange";
 
 
 export class ChangeProfileDataPage extends Block {
-    constructor(changePage: (page: string) => void) {
+    constructor() {
         super({
             chatsButton: new Button({
                 text: "<-",
                 id: "chats-button",
                 onClick: (event: Event) => {
                     console.log('CLICK Chats button');
-                    changePage('chats');
+                    router.go(Urls.Chats)
                     event.preventDefault();
                     event.stopPropagation();
                 }
             }),
+            avatar: new AvatarWithProps({
+                size: '100'
+            }),
+            avatarChange: new AvatarChange({
+                avatar: new AvatarWithProps({
+                    size: '100',
+                }),
+                events: {
+                    change: async (event: Event) => {
+                        const formData = new FormData();
+                        const target = event.target as HTMLInputElement;
+                        if (target.files && target.files.length !== 0) {
+                            const file = target.files[0];
+                            formData.append('avatar', file);
+                            await ProfileController.changeAvatar(formData);
+                        }
+                    },
+                },
+            }),
             saveButton: new Button({
                 text: "Сохранить",
                 id: "submit-save",
-                onClick: (event: Event) => {
+                onClick: async (event: Event) => {
                     console.log('CLICK Save button');
 
                     const inputs = [
@@ -52,7 +76,18 @@ export class ChangeProfileDataPage extends Block {
                     if (isValid) {
                         console.log('Все непустые данные провалидированы');
                         console.log('Изменённые данные:', changes);
-                        changePage('chats');
+
+                        const profileData: ProfileData = {
+                            display_name: (document.querySelector('#profile-chatName-input') as HTMLInputElement).value,
+                            email: (document.querySelector('#profile-email-input') as HTMLInputElement).value,
+                            first_name: (document.querySelector('#profile-firstname-input') as HTMLInputElement).value,
+                            second_name: (document.querySelector('#profile-lastname-input') as HTMLInputElement).value,
+                            login: (document.querySelector('#profile-login-input') as HTMLInputElement).value,
+                            phone: (document.querySelector('#profile-phone-input') as HTMLInputElement).value,
+                        };
+                        if (profileData) {
+                            await ProfileController.changeProfile(profileData);
+                        }
                     } else {
                         console.log('Необходимо правильно заполнить данные');
                     }
@@ -72,10 +107,10 @@ export class ChangeProfileDataPage extends Block {
                     if (emailValue) {
                         if (utils.validateEmail(emailValue)) {
                             console.log('Email is valid');
-                            this.children.errorMessageEmail.setProps({error: ""});
+                            (this.children.errorMessageEmail as Block).setProps({error: ""});
                         } else {
                             console.log('Email is invalid');
-                            this.children.errorMessageEmail.setProps({error: messages.wrongEmail})
+                            (this.children.errorMessageEmail as Block).setProps({error: messages.wrongEmail})
                         }
                     }
                     event.preventDefault();
@@ -96,10 +131,10 @@ export class ChangeProfileDataPage extends Block {
                     if (loginValue) {
                         if (utils.validateLogin(loginValue)) {
                             console.log('Login is valid');
-                            this.children.errorMessageLogin.setProps({error: ""});
+                            (this.children.errorMessageLogin as Block).setProps({error: ""});
                         } else {
                             console.log('Login is invalid');
-                            this.children.errorMessageLogin.setProps({error: messages.wrongLogin})
+                            (this.children.errorMessageLogin as Block).setProps({error: messages.wrongLogin})
                         }
                     }
                     event.preventDefault();
@@ -120,10 +155,10 @@ export class ChangeProfileDataPage extends Block {
                     if (firstNameValue) {
                         if (utils.validateName(firstNameValue)) {
                             console.log('First name is valid');
-                            this.children.errorMessageFirstname.setProps({error: ""});
+                            (this.children.errorMessageFirstname as Block).setProps({error: ""});
                         } else {
                             console.log('First name invalid');
-                            this.children.errorMessageFirstname.setProps({error: messages.wrongName})
+                            (this.children.errorMessageFirstname as Block).setProps({error: messages.wrongName})
                         }
                     }
                     event.preventDefault();
@@ -144,10 +179,10 @@ export class ChangeProfileDataPage extends Block {
                     if (lastNameValue) {
                         if (utils.validateName(lastNameValue)) {
                             console.log('Last name is valid');
-                            this.children.errorMessageLastname.setProps({error: ""});
+                            (this.children.errorMessageLastname as Block).setProps({error: ""});
                         } else {
                             console.log('Last name invalid');
-                            this.children.errorMessageLastname.setProps({error: messages.wrongName})
+                            (this.children.errorMessageLastname as Block).setProps({error: messages.wrongName})
                         }
                     }
                     event.preventDefault();
@@ -168,10 +203,10 @@ export class ChangeProfileDataPage extends Block {
                     if (phoneValue) {
                         if (utils.validatePhone(phoneValue)) {
                             console.log('Phone is valid');
-                            this.children.errorMessagePhone.setProps({error: ""});
+                            (this.children.errorMessagePhone as Block).setProps({error: ""});
                         } else {
                             console.log('Phone name invalid');
-                            this.children.errorMessagePhone.setProps({error: messages.wrongPhone})
+                            (this.children.errorMessagePhone as Block).setProps({error: messages.wrongPhone})
                         }
                     }
                     event.preventDefault();
@@ -207,9 +242,7 @@ export class ChangeProfileDataPage extends Block {
                         </div>
                         <div class="profile-right-side">
                             <div class="profile-card">
-                                <div class="avatar">
-                                <img src="" alt="Аватар" class="avatar-image">
-                                </div>
+                                {{{ avatarChange }}}
                                 <table class="profile-info">
                                     <tbody>
                                         <tr>
@@ -263,4 +296,3 @@ export class ChangeProfileDataPage extends Block {
                      `;
     }
 }
-
