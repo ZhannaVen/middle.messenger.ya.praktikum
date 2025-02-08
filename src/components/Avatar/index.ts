@@ -3,7 +3,7 @@ import {State} from "../../services/Store";
 import {connect} from "../../services/HOC";
 
 interface AvatarProps {
-    avatar: string;
+    avatar?: string;
     size: string;
     [key: string]: any;
 }

@@ -11,7 +11,7 @@ export enum WebSocketEvents {
 export class WebSocketTransport extends EventBus {
     private socket: WebSocket | null = null;
 
-    private interval: number = 0;
+    private interval: ReturnType<typeof setInterval> | number = 0;
 
     private readonly url: string;
 
@@ -30,8 +30,7 @@ export class WebSocketTransport extends EventBus {
     }
 
     private setPing() {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
+
         this.interval = setInterval(() => {
             this.send({ type: 'ping' });
         }, 5000);
@@ -70,10 +69,9 @@ export class WebSocketTransport extends EventBus {
                 if (typeof dataStr !== 'string') {
                     dataStr = dataStr.toString();
                 }
-                // Проверяем, похоже ли сообщение на JSON
                 if (dataStr[0] !== '{' && dataStr[0] !== '[') {
                     console.warn('Получено не JSON сообщение:', dataStr);
-                    return; // или можно обработать этот случай иначе
+                    return;
                 }
                 const data = JSON.parse(event.data);
                 if (data.type === 'pong') {

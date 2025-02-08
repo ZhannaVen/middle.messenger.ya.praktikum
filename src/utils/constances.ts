@@ -13,6 +13,3 @@ const wrongPhone: string = "Телефон должен содержать от 
 const wrongMessage: string = "Поле не должно быть пустым";
 
 export {wrongName, wrongLogin, wrongPhone, wrongEmail, wrongPassword, wrongMessage, wrongPassword2};
-
-
-
