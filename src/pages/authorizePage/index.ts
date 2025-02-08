@@ -8,9 +8,10 @@ import * as utils from "../../utils/validators";
 import {getFormData} from "../../utils/helpFunctions";
 import * as messages from "../../utils/constances";
 import {AuthController} from "../../controllers/auth-controller";
-import { SignInData} from '../../utils/types';
+import {SignInData, Urls} from '../../utils/types';
 import {State} from "../../services/Store";
 import {connect} from "../../services/HOC";
+import router from "../../services/Router";
 // import {ProfilePage} from "../profilePages/showUserInfo";
 
 
@@ -76,26 +77,27 @@ export class AuthorizePage extends Block {
                 text:"Авторизоваться",
                 onClick: async (event: Event) => {
                     console.log('CLICK Submit button');
-                    const loginValue = (document.querySelector('#login-input') as HTMLInputElement).value;
-                    const passwordValue = (document.querySelector('#password-input') as HTMLInputElement).value;
-                    if (
-                        (utils.validateLogin(loginValue)) &&
-                        (utils.validatePassword(passwordValue))
-                    ) {
-                        console.log('Данные провалидированы');
-                        console.log('Данные из формы:');
-                        const form = document.querySelector('.login-form') as HTMLFormElement;
-                        if (form) {
-                            const formData = getFormData(form);
-                            console.log(formData);
-                            await AuthController.signin(formData as unknown as SignInData);
-                        }
-                    } else {
-                        console.log('Необходимо правильно заполнить данные');
-                    }
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
+                    router.go(Urls.Chats);
+                //     const loginValue = (document.querySelector('#login-input') as HTMLInputElement).value;
+                //     const passwordValue = (document.querySelector('#password-input') as HTMLInputElement).value;
+                //     if (
+                //         (utils.validateLogin(loginValue)) &&
+                //         (utils.validatePassword(passwordValue))
+                //     ) {
+                //         console.log('Данные провалидированы');
+                //         console.log('Данные из формы:');
+                //         const form = document.querySelector('.login-form') as HTMLFormElement;
+                //         if (form) {
+                //             const formData = getFormData(form);
+                //             console.log(formData);
+                //             await AuthController.signin(formData as unknown as SignInData);
+                //         }
+                //     } else {
+                //         console.log('Необходимо правильно заполнить данные');
+                //     }
+                //     event.preventDefault();
+                //     event.stopPropagation();
+                // }
             }),
             registerLink: new Link({
                 href: '/sign-up',
