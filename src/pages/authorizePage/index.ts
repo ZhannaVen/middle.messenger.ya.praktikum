@@ -74,7 +74,7 @@ export class AuthorizePage extends Block {
             authorizeButton: new Button({
                 id:"submit-authorization",
                 text:"Авторизоваться",
-                onClick: (event: Event) => {
+                onClick: async (event: Event) => {
                     console.log('CLICK Submit button');
                     const loginValue = (document.querySelector('#login-input') as HTMLInputElement).value;
                     const passwordValue = (document.querySelector('#password-input') as HTMLInputElement).value;
@@ -88,7 +88,7 @@ export class AuthorizePage extends Block {
                         if (form) {
                             const formData = getFormData(form);
                             console.log(formData);
-                            AuthController.signin(formData as unknown as SignInData);
+                            await AuthController.signin(formData as unknown as SignInData);
                         }
                     } else {
                         console.log('Необходимо правильно заполнить данные');

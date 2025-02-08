@@ -24,7 +24,7 @@ export class Button extends Block<ButtonProps> {
         return `<button
              class="button"
              id="{{ id }}"
-             type="submit"
+             type="button"
              >
                 {{ text }}
              </button>`;
