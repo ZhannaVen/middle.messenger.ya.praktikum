@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       .use(Urls.Authorize, AuthorizeWithProps)
       .use(Urls.Register, RegisterWithProps)
       .use(Urls.Chats, ChatsWithProps)
-      // .use(Urls.Chats, ChatsPage)
       .use(Urls.Profile, ProfileWithProps)
       .use(Urls.ChangeProfile, ChangeProfileDataPage)
       .use(Urls.ChangePassword, ChangePasswordPage)

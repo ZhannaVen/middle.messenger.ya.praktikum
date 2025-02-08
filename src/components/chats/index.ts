@@ -56,15 +56,14 @@ export class ActiveChat extends Block<ActiveChatProps> {
                     <span class="chat-title">{{ chat.title }}</span>
                     {{{ optionsButton }}}
                 </header>
-            </div>
                 {{#each allMessages }}
                     <div class="message">
                         <p class="message-text">{{{this.content}}}</p>
 <!--                        <p class="message-time">{{{this.time}}}</p>-->
 <!--                        <p class="message-user-id">{{{this.user_id}}}</p>-->
-                    </div>
-                {{/each}}
-            </div>
+                     </div>
+                 {{/each}}
+             </div>
         `;
     }
 }

@@ -8,6 +8,7 @@ function isEqual(lhs: string, rhs: string) {
 function render(query: string, block: Block) {
     const root = document.getElementById(query);
     if (root) {
+        root.innerHTML = '';
         const content = block.getContent();
         if (content) {
             root.append(content);
@@ -96,7 +97,7 @@ class Router {
     start() {
         console.log("Router start() called");
         window.onpopstate = ((event: PopStateEvent) => {
-            const target = event.currentTarget as Window; // Явное указание типа
+            const target = event.currentTarget as Window;
             this._onRoute(target.location.pathname);
         });
 
@@ -104,16 +105,20 @@ class Router {
     }
 
     private _onRoute(pathname: string) {
+        console.log('Роутер: обрабатываю маршрут', pathname);
         const route = this.getRoute(pathname);
         if (!route) {
+            console.warn('Роутер: маршрут не найден для', pathname);
             return;
         }
 
         if (this._currentRoute && this._currentRoute !== route) {
+            console.log('Роутер: скрываю предыдущий маршрут');
             this._currentRoute.leave();
         }
 
         this._currentRoute = route;
+        console.log('Роутер: рендерю новый маршрут');
         route.render();
     }
 

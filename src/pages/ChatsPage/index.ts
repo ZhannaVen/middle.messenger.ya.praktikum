@@ -32,9 +32,9 @@ export class ChatsPage extends Block {
                 class: "user-profile-link",
                 'data-page': "userProfile",
                 text: "Профиль",
-                onClick: (event: Event) => {
+                onClick: async (event: Event) => {
                     console.log('CLICK Profile button');
-                    AuthController.fetchUser()
+                    await AuthController.fetchUser()
                     router.go(Urls.Profile)
                     event.preventDefault();
                     event.stopPropagation();
@@ -292,7 +292,7 @@ export class ChatsPage extends Block {
                             const chats = store.getState().chats;
                             if (chats && chats.length > 0) {
                                 store.set("activeChat", chats[0]);
-                                ChatsController.selectChat(chats[0].id);
+                                await ChatsController.selectChat(chats[0].id);
                                 MessagesController.findMessages(chats[0].id);
                             } else {
                                 store.set("activeChat", null);
@@ -384,12 +384,12 @@ export class ChatsPage extends Block {
         this.children.chats = (store.getState().chats ?? []).map(
             (chat: Chat) => new ChatBlock({
                 chat,
-                onClick: (chatId: number) => {
-                    ChatsController.selectChat(chatId);
+                onClick: async (chatId: number) => {
+                    await ChatsController.selectChat(chatId);
                     MessagesController.findMessages(chatId);
                     (this.children.activeChat as Block).setProps({
                         chat: store.getState().activeChat,
-                        allMessages: store.getState()?.currentMessages|| [],
+                        allMessages: (store.getState()?.currentMessages || []).slice(-5),
                     });
 
                 },
@@ -440,7 +440,7 @@ export class ChatsPage extends Block {
                     `;
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         console.log("ChatsPage mounted");
 
         store.subscribe((newState) => {
@@ -451,7 +451,7 @@ export class ChatsPage extends Block {
             store.setState(JSON.parse(persistedState));
         }
 
-        AuthController.fetchUser();
+        await AuthController.fetchUser();
         ChatsController.getChatsList().then(() => {
             const chats = store.getState().chats;
             console.log("Chats after loading:", store.getState().chats);
@@ -472,8 +472,8 @@ export class ChatsPage extends Block {
         this.children.chats = (store.getState().chats ?? []).map(
             (chat: Chat) => new ChatBlock({
                 chat,
-                onClick: (chatId: number) => {
-                    ChatsController.selectChat(chatId);
+                onClick: async (chatId: number) => {
+                    await ChatsController.selectChat(chatId);
                     MessagesController.findMessages(chatId);
                     (this.children.activeChat as Block).setProps({
                         chat: store.getState().activeChat,

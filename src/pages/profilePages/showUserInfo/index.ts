@@ -18,7 +18,7 @@ export class ProfilePage extends Block {
                 id: "chats-button",
                 onClick: (event: Event) => {
                     console.log('CLICK Chats button');
-                    router.go(Urls.Chats)
+                    router.go(Urls.Chats);
                     event.preventDefault();
                     event.stopPropagation();
                 }
@@ -28,12 +28,11 @@ export class ProfilePage extends Block {
             }),
             user: store.getState().user,
             changeDataLink: new Link({
-                href: 'settings/change-profile',
                 'data-page': 'changeProfileData',
                 text: 'Изменить данные',
                 class: 'change-profile-link',
                 onClick: (event: Event) => {
-                    console.log('CLICK');
+                    console.log('CLICK changeProfileData');
                     router.go(Urls.ChangeProfile)
                     event.preventDefault();
                     event.stopPropagation();
@@ -41,12 +40,11 @@ export class ProfilePage extends Block {
                 },
             }),
             changePasswordLink: new Link({
-                href: 'settings/change-password',
                 'data-page': 'changePassword',
                 text: 'Изменить пароль',
                 class: 'change-password-link',
                 onClick: (event: Event) => {
-                    console.log('CLICK');
+                    console.log('CLICK changePassword');
                     router.go(Urls.ChangePassword)
                     event.preventDefault();
                     event.stopPropagation();
@@ -58,9 +56,9 @@ export class ProfilePage extends Block {
                 'data-page': 'authorize',
                 text: 'Выйти',
                 class: 'profile-login-link',
-                onClick: (event: Event) => {
+                onClick: async (event: Event) => {
                     console.log('CLICK Logout link');
-                    AuthController.logout();
+                    await AuthController.logout();
                     event.preventDefault();
                     event.stopPropagation();
                 }
@@ -72,8 +70,8 @@ export class ProfilePage extends Block {
         console.log('ProfilePage componentDidMount');
 
         store.subscribe((newState) => {
-            console.log("🔄 Store updated:", newState);
-            this.setProps({ user: newState.user }); // Обновляем пропсы компонента
+            console.log("Store updated:", newState);
+            this.setProps({ user: newState.user });
         });
 
         const persistedState = localStorage.getItem('appState');
@@ -92,14 +90,7 @@ export class ProfilePage extends Block {
     }
 
     override render(): string {
-        const { user } = this.props;
-
-        if (!user) {
-            return `<div>Загрузка...</div>`;
-        }
-
         return `
-                <div id="app">
                     <main class="profile-container">
                         <div class="profile-left-side">
                             {{{ chatsButton }}}
@@ -156,7 +147,6 @@ export class ProfilePage extends Block {
                             </div>
                         </div>
                     </main>
-                </div>
                      `;
     }
 }
