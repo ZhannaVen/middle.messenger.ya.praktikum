@@ -66,6 +66,10 @@ export class ChatsController {
         const activeChat = store.getState().chats?.find((chat) => chat.id === chatId);
         store.set('activeChat', activeChat);
         await this.fetchChatUsers(chatId);
+
+        const token = await this.getToken(chatId);
+        await MessagesController.connect(chatId, token);
+        MessagesController.fetchOldMessages(chatId);
     }
 
     static async fetchChatUsers(chatId: number) {
