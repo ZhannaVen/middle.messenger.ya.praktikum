@@ -7,11 +7,13 @@
     "node": ">=16"
   },
   "scripts": {
+    "lint:styles": "NODE_OPTIONS=--require ./polyfills.js stylelint '**/*.pcss'",
+    "lint": "npm run lint:eslint && npm run lint:styles",
+    "lint:eslint": "eslint .",
     "dev": "vite",
     "build": "vite build",
     "start": "vite build && node server.cjs",
-    "preview": "vite preview",
-    "lint": "eslint ."
+    "preview": "vite preview"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

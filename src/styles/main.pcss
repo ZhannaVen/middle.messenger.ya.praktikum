@@ -46,7 +46,6 @@ body {
   font-size: 20px;
 }
 
-
 .login-container {
   width: 340px;
   height: 615px;
@@ -95,6 +94,12 @@ body {
   overflow-y: auto;
 }
 
+img {
+  display: block;
+  align-content: center;
+  margin-top: 20px;
+}
+
 .chat-item {
   display: flex;
   align-items: center;
@@ -114,19 +119,16 @@ body {
   box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
 }
 
-
-.chat-item .avatar img{
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-}
-
-
 .avatar img {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.chat-item .avatar img {
+  width: 40px;
+  height: 40px;
 }
 
 .chat-details {
@@ -146,6 +148,7 @@ body {
   text-overflow: ellipsis;
   margin: 0;
   padding: 0;
+  width: 90%;
 }
 
 .chat-message {
@@ -219,7 +222,6 @@ body {
 
 #message-input {
   flex: 1;
-  //flex-shrink: 0;
   padding: 10px;
   width: 70%;
   border: 1px solid #ced4da;
@@ -269,7 +271,6 @@ label {
   height: 9px;
   font-size: 9px;
   color: #999;
-
 }
 
 input {
@@ -307,13 +308,6 @@ a.profile-login-link {
   color: #d92311;
 }
 
-
-img {
-  display: block;
-  align-content: center;
-  margin-top: 20px;
-}
-
 .input-error {
   border-color: red;
 }
@@ -341,7 +335,6 @@ img {
 
 .avatar-label {
   margin-left: 370px;
-
 }
 
 #chats-button {
@@ -403,11 +396,6 @@ img {
   color: #888;
 }
 
-.profile-info input:focus {
-  outline: none;
-  border-color: var(--primary-color);
-}
-
 #submit-save {
   width: 280px;
   text-align: center;
@@ -433,13 +421,6 @@ img {
   border-top-right-radius: 8px;
 }
 
-.chat-title {
-  font-weight: bold;
-  width: 90%;
-  font-size: 16px;
-  color: #333;
-}
-
 #menu-button {
   background: none;
   margin-right: 60px;
@@ -460,7 +441,6 @@ img {
 }
 
 .popup {
-  //display: none;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -482,8 +462,8 @@ img {
 .popup label {
   display: block;
   width: 100%;
-  margin-bottom: 20px;
   margin-top: 20px;
+  margin-bottom: 20px;
   font-size: 14px;
   color: #333;
 }
@@ -494,6 +474,11 @@ img {
   border: 1px solid #ccc;
   border-radius: 5px;
   margin-bottom: 10px;
+}
+
+.profile-info input:focus {
+  outline: none;
+  border-color: var(--primary-color);
 }
 
 .popup button {
@@ -548,7 +533,6 @@ body.popup-active::after {
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  //background: #e9ecef;
   padding: 10px;
   border-radius: 5px;
   margin-left: 10px;
