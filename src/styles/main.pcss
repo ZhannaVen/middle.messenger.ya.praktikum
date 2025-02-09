@@ -94,6 +94,12 @@ body {
   overflow-y: auto;
 }
 
+img {
+  display: block;
+  align-content: center;
+  margin-top: 20px;
+}
+
 .chat-item {
   display: flex;
   align-items: center;
@@ -113,17 +119,16 @@ body {
   box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
 }
 
-.chat-item .avatar img{
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-}
-
 .avatar img {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.chat-item .avatar img {
+  width: 40px;
+  height: 40px;
 }
 
 .chat-details {
@@ -143,6 +148,7 @@ body {
   text-overflow: ellipsis;
   margin: 0;
   padding: 0;
+  width: 90%;
 }
 
 .chat-message {
@@ -216,7 +222,6 @@ body {
 
 #message-input {
   flex: 1;
-  //flex-shrink: 0;
   padding: 10px;
   width: 70%;
   border: 1px solid #ced4da;
@@ -266,7 +271,6 @@ label {
   height: 9px;
   font-size: 9px;
   color: #999;
-
 }
 
 input {
@@ -304,7 +308,6 @@ a.profile-login-link {
   color: #d92311;
 }
 
-
 img {
   display: block;
   align-content: center;
@@ -338,7 +341,6 @@ img {
 
 .avatar-label {
   margin-left: 370px;
-
 }
 
 #chats-button {
@@ -431,10 +433,15 @@ img {
 }
 
 .chat-title {
+  font-size: 14px;
   font-weight: bold;
-  width: 90%;
-  font-size: 16px;
   color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  padding: 0;
+  width: 90%;
 }
 
 #menu-button {
@@ -457,7 +464,6 @@ img {
 }
 
 .popup {
-  //display: none;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -479,8 +485,8 @@ img {
 .popup label {
   display: block;
   width: 100%;
-  margin-bottom: 20px;
   margin-top: 20px;
+  margin-bottom: 20px;
   font-size: 14px;
   color: #333;
 }
@@ -545,7 +551,6 @@ body.popup-active::after {
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  //background: #e9ecef;
   padding: 10px;
   border-radius: 5px;
   margin-left: 10px;
