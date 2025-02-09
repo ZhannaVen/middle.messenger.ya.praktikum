@@ -21,6 +21,8 @@ import {DeleteChatPopup} from "../../components/deleteChatPopup";
 import {Text} from "../../components/Text";
 import {Chat} from "../../utils/types";
 import {ChatBlock} from "../../components/Chat";
+import {AvatarChange} from "../../components/AvatarChange";
+import {ChatAvatarWithProps} from "../../components/Avatar";
 
 
 export class ChatsPage extends Block {
@@ -53,7 +55,7 @@ export class ChatsPage extends Block {
             }),
             createChatPopup: new Popup({
                 someLabel: new Label({
-                    forAttr: "create-chat-input",
+                    for: "create-chat-input",
                     text: "Укажите назание чата"
                 }),
                 someInput: new Input({
@@ -92,7 +94,7 @@ export class ChatsPage extends Block {
             }),
             activeChat: new ActiveChat({
                 chat: store.getState().activeChat,
-                allMessages: (store.getState()?.currentMessages || []).slice(-5),
+                allMessages: store.getState()?.currentMessages || [],
                 optionsButton: new Button({
                     id: "menu-button",
                     text: "⋮",
@@ -120,7 +122,7 @@ export class ChatsPage extends Block {
                     id: "addUserPopup",
                     text: "Добавить пользователя",
                     onClick: (event: Event) => {
-                        console.log('CLICK Popup button');
+                        console.log('CLICK add users popup show button');
                         this.setProps({
                             optionsPopup: false,
                             addUser: true,
@@ -128,7 +130,7 @@ export class ChatsPage extends Block {
                         if (this.children.optionsList instanceof Block) {
                             this.children.optionsList.hide();
                         }
-                        (this.children.createUserPopup as Block).show()
+                        (this.children.addUserPopup as Block).show()
                         event.preventDefault();
                         event.stopPropagation();
                     }
@@ -167,10 +169,73 @@ export class ChatsPage extends Block {
                         event.stopPropagation();
                     }
                 }),
+                changeChatAvatarButton: new Button({
+                    id: "changeChatAvatarPopup",
+                    text: "Изменить аватар группы",
+                    onClick: (event: Event) => {
+                        console.log('CLICK changeChatAvatarPopup button');
+                        this.setProps({
+                            optionsPopup: false,
+                            changeChatAvatar: true,
+                        });
+                        if (this.children.optionsList instanceof Block) {
+                            this.children.optionsList.hide();
+                        }
+                        (this.children.changeChatAvatarPopup as Block).show()
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                }),
+            }),
+            changeChatAvatarPopup: new Popup({
+                someLabel: new Label({
+                    for: "changeChatAvatar-input",
+                    text: "Выберите новый аватар для группы"
+                }),
+                someInput: new AvatarChange({
+                    avatar: new ChatAvatarWithProps({
+                        size: '100',
+                    }),
+                    events: {
+                        change: async (event: Event) => {
+                            const formData = new FormData();
+                            const target = event.target as HTMLInputElement;
+                            if (target.files && target.files.length !== 0) {
+                                const file = target.files[0];
+                                formData.append('avatar', file);
+                                const chatId = store.getState().activeChat?.id;
+                                if (chatId !== undefined && chatId !== null) {
+                                    // @ts-expect-error TS2769
+                                    formData.append('chatId', chatId);
+                                } else {
+                                    console.error("Ошибка: chatId отсутствует.");
+                                    return;
+                                }
+                                await ChatsController.changeChatAvatar(formData);
+
+                            }
+                        },
+                    },
+                }),
+                closeButton: new Button({
+                    id: "changeChatAvatar-close-button",
+                    text: "X",
+                    onClick: (event: Event) => {
+                        console.log('CLICK changeChatAvatar-close button');
+                        (this.children.changeChatAvatarPopup as Block).hide();
+                        event.preventDefault();
+                        event.stopPropagation();
+                        setTimeout(() => {
+                            (this.children.activeChat as Block).setProps({
+                                chat: store.getState().activeChat
+                            });
+                        }, 1000);
+                    }
+                })
             }),
             addUserPopup: new Popup({
                 someLabel: new Label({
-                    forAttr: "addUser-input",
+                    for: "addUser-input",
                     text: "Укажите id пользователей через запятую"
                 }),
                 someInput: new Input({
@@ -223,7 +288,7 @@ export class ChatsPage extends Block {
             }),
             deleteUserPopup: new Popup({
                 someLabel: new Label({
-                    forAttr: "deleteUser-input",
+                    for: "deleteUser-input",
                     text: "Укажите id пользователей через запятую"
                 }),
                 someInput: new Input({
@@ -342,6 +407,35 @@ export class ChatsPage extends Block {
                     event.preventDefault();
                     event.stopPropagation();
                 },
+                onKeyDown: async (event: KeyboardEvent) => {
+                    if (event.key === "Enter") {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        console.log("Нажат Enter, отправка сообщения");
+                        const inputElement = document.querySelector('#message-input') as HTMLInputElement;
+                        const messageValue = inputElement.value;
+                        if (utils.validateMessage(messageValue) && messageValue) {
+                            console.log('Message is valid');
+                            if (messageValue) {
+                                const chatId = store.getState().activeChat?.id;
+                                if (chatId) {
+                                    await MessagesController.sendMessage(chatId, messageValue);
+                                    MessagesController.findMessages(chatId);
+                                    setTimeout(() => {
+                                        MessagesController.findMessages(chatId);
+                                        (this.children.activeChat as Block).setProps({
+                                            allMessages: store.getState()?.currentMessages || []
+                                        });
+                                        inputElement.value = "";
+                                    }, 1000);
+                                }
+                            }
+                        } else {
+                            console.log('Message is invalid');
+                            (this.children.errorMessage as Block).setProps({error: messages.wrongMessage});
+                        }
+                    }
+                }
             }),
             errorMessage: new errorMessage({
                 error: ""
@@ -363,7 +457,7 @@ export class ChatsPage extends Block {
                                 setTimeout(() => {
                                     MessagesController.findMessages(chatId);
                                     (this.children.activeChat as Block).setProps({
-                                        allMessages: (store.getState()?.currentMessages || []).slice(-5)
+                                        allMessages: store.getState()?.currentMessages || []
                                     });
                                     inputElement.value = "";
                                 }, 1000);
@@ -389,7 +483,7 @@ export class ChatsPage extends Block {
                     MessagesController.findMessages(chatId);
                     (this.children.activeChat as Block).setProps({
                         chat: store.getState().activeChat,
-                        allMessages: (store.getState()?.currentMessages || []).slice(-5),
+                        allMessages: store.getState()?.currentMessages || [],
                     });
 
                 },
@@ -413,21 +507,6 @@ export class ChatsPage extends Block {
                             </div>
                             <div class="messenger-right-side">
                                 {{{ activeChat }}}
-                                {{#if optionsPopup}}
-                                    {{{ optionsList }}}
-                                {{/if}}
-                                {{#if addUser}}
-                                    {{{ addUserPopup }}}
-                                {{/if}}
-                                {{#if deleteUser}}
-                                    {{{ deleteUserPopup }}}
-                                {{/if}}
-                                {{#if deleteChat}}
-                                    {{{ deleteChatPopup }}}
-                                {{/if}}
-                                {{#if createChat}}
-                                    {{{ createChatPopup }}}
-                                {{/if}}
                                 <form class="messenger-input">
                                     {{{ messageInput }}}
                                     {{{ errorMessage }}}
@@ -435,6 +514,24 @@ export class ChatsPage extends Block {
                                 </form>
                             </div>
                         </main>
+                        {{#if optionsPopup}}
+                            {{{ optionsList }}}
+                        {{/if}}
+                        {{#if addUser}}
+                            {{{ addUserPopup }}}
+                        {{/if}}
+                        {{#if deleteUser}}
+                            {{{ deleteUserPopup }}}
+                        {{/if}}
+                        {{#if deleteChat}}
+                            {{{ deleteChatPopup }}}
+                        {{/if}}
+                        {{#if createChat}}
+                            {{{ createChatPopup }}}
+                        {{/if}}
+                        {{#if changeChatAvatar}}
+                            {{{ changeChatAvatarPopup }}}
+                        {{/if}}                        
                     </body>
                 </div>
                     `;
@@ -477,7 +574,7 @@ export class ChatsPage extends Block {
                     MessagesController.findMessages(chatId);
                     (this.children.activeChat as Block).setProps({
                         chat: store.getState().activeChat,
-                        allMessages: (store.getState()?.currentMessages || []).slice(-5),
+                        allMessages: store.getState()?.currentMessages || [],
                     });
                 },
             })

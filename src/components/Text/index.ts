@@ -7,12 +7,6 @@ interface TextProps {
 }
 
 export class Text extends Block<TextProps> {
-    constructor(props: any) {
-        super({
-            ...props,
-        });
-    }
-
     override render() {
         return '<p class="{{class}}">{{text}}</p>';
     }

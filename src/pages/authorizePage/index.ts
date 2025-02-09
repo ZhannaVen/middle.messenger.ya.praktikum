@@ -18,7 +18,7 @@ export class AuthorizePage extends Block {
     constructor() {
         super({
             loginLabel: new Label({
-                forAttr: "login-input",
+                for: "login-input",
                 text: "Логин"
             }),
             loginInput: new Input({
@@ -46,7 +46,7 @@ export class AuthorizePage extends Block {
                 error: ""
             }),
             passwordLabel: new Label({
-                forAttr: "password-input",
+                for: "password-input",
                 text: "Пароль"
             }),
             passwordInput: new Input({

@@ -6,10 +6,6 @@ interface ChatPopupProps {
 }
 
 export class DeleteChatPopup extends Block<ChatPopupProps> {
-    constructor(props: any) {
-        super(props)
-    }
-
     override render(): string {
         return `
                  <div class="popup">

@@ -8,12 +8,6 @@ interface AvatarChangeProps {
 }
 
 export class AvatarChange extends Block<AvatarChangeProps> {
-        constructor(props: any) {
-        super({
-            ...props,
-        });
-    }
-
     override render() {
         return `
                 <div class="avatar-container">

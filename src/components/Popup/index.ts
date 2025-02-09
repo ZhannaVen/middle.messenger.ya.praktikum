@@ -6,10 +6,6 @@ interface PopupProps {
 }
 
 export class Popup extends Block<PopupProps> {
-    constructor(props: any) {
-        super(props)
-    }
-
     override render(): string {
         return `
                  <div class="popup">

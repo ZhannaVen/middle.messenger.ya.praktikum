@@ -86,4 +86,23 @@ export class ChatsController {
             console.log(error, 'error has occurred in getting chat users');
         }
     }
+
+    static async changeChatAvatar(data: FormData) {
+        try {
+            const response = await chatsAPI.changeChatAvatar(data);
+            const { avatar, id } = response;
+            const { chats, activeChat } = store.getState();
+            const updatedChats = chats?.map((chat) =>
+                chat.id !== id ? chat : {...chat, avatar,});
+
+            if (updatedChats) {
+                store.set('chats', updatedChats);
+            }
+            if (activeChat && activeChat.id === id) {
+                store.set("activeChat", { ...activeChat, avatar });
+            }
+        } catch (error) {
+            console.log(error, 'error has occurred in editing chat avatar');
+        }
+    }
 }

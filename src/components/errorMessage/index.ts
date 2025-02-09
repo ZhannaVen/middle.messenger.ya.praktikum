@@ -7,12 +7,6 @@ interface errorMessageProps {
 }
 
 export class errorMessage extends Block<errorMessageProps> {
-    constructor(props: any) {
-        super({
-            ...props,
-        });
-    }
-
     override render() {
         return `
                <p class="input-error-text">
