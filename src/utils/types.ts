@@ -58,13 +58,13 @@ export enum Urls {
 }
 
 export interface Chat {
-    // avatar: string;
-    // created_by: number;
     id: number;
     user: string;
-    // last_message: LastMessage;
-    // title: string;
-    // unread_count: number;
+    avatar: string;
+    created_by: number;
+    last_message: LastMessage;
+    title: string;
+    unread_count: number;
 }
 
 export interface LastMessage {

@@ -9,12 +9,6 @@ interface AvatarProps {
 }
 
 export class Avatar extends Block<AvatarProps> {
-    constructor(props: any) {
-        super({
-            ...props,
-        });
-    }
-
     override render() {
         return `<div class="avatar">
                   {{#if avatar}}
@@ -29,3 +23,9 @@ const mapStateToProps = (state: State) => ({
 });
 
 export const AvatarWithProps = connect(mapStateToProps)(Avatar);
+
+const mapStateToPropsChat = (state: State) => ({
+    avatar: state.activeChat?.avatar || '',
+});
+
+export const ChatAvatarWithProps = connect(mapStateToPropsChat)(Avatar);

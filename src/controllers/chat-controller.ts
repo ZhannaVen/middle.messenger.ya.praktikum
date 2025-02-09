@@ -70,6 +70,7 @@ export class ChatsController {
         const token = await this.getToken(chatId);
         await MessagesController.connect(chatId, token);
         MessagesController.fetchOldMessages(chatId);
+
     }
 
     static async fetchChatUsers(chatId: number) {
@@ -83,6 +84,25 @@ export class ChatsController {
             );
         } catch (error) {
             console.log(error, 'error has occurred in getting chat users');
+        }
+    }
+
+    static async changeChatAvatar(data: FormData) {
+        try {
+            const response = await chatsAPI.changeChatAvatar(data);
+            const { avatar, id } = response;
+            const { chats, activeChat } = store.getState();
+            const updatedChats = chats?.map((chat) =>
+                chat.id !== id ? chat : {...chat, avatar,});
+
+            if (updatedChats) {
+                store.set('chats', updatedChats);
+            }
+            if (activeChat && activeChat.id === id) {
+                store.set("activeChat", { ...activeChat, avatar });
+            }
+        } catch (error) {
+            console.log(error, 'error has occurred in editing chat avatar');
         }
     }
 }

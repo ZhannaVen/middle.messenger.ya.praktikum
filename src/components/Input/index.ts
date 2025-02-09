@@ -7,6 +7,7 @@ interface InputProps {
     placeholder?: string;
     value?: string;
     onBlur: (e: Event) => void;
+    onKeyDown: (e: Event) => void;
     error?: string;
     [key: string]: any;
 }
@@ -19,6 +20,10 @@ export class Input extends Block<InputProps> {
                 blur: (e: Event) => {
                     console.log('blur input');
                     props.onBlur(e);
+                },
+                keydown: (e: KeyboardEvent) => {
+                    console.log('keydown input');
+                    props.onKeyDown(e);
                 },
             },
         });
