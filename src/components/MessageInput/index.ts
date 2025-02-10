@@ -1,4 +1,5 @@
-import Block from '../../services/Block';
+import Block from "../../services/Block";
+
 
 interface InputProps {
     id: string;
@@ -7,11 +8,12 @@ interface InputProps {
     placeholder?: string;
     value?: string;
     onBlur: (e: Event) => void;
+    onKeyDown: (e: Event) => void;
     error?: string;
     [key: string]: any;
 }
 
-export class Input extends Block<InputProps> {
+export class MessageInput extends Block<InputProps> {
     constructor(props: any) {
         super({
             ...props,
@@ -20,12 +22,16 @@ export class Input extends Block<InputProps> {
                     console.log('blur input');
                     props.onBlur(e);
                 },
+                keydown: (e: KeyboardEvent) => {
+                    console.log('keydown input');
+                    props.onKeyDown(e);
+                },
             },
         });
     }
 
     override render() {
-            return `
+        return `
                      <input 
                      id="{{id}}" 
                      name="{{name}}" 
@@ -35,5 +41,5 @@ export class Input extends Block<InputProps> {
                      class="input"
                      >
                    `;
-        }
+    }
 }
