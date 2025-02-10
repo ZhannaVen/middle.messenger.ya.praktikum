@@ -23,6 +23,7 @@ import {Chat} from "../../utils/types";
 import {ChatBlock} from "../../components/Chat";
 import {AvatarChange} from "../../components/AvatarChange";
 import {ChatAvatarWithProps} from "../../components/Avatar";
+import {MessageInput} from "../../components/MessageInput";
 
 
 export class ChatsPage extends Block {
@@ -388,7 +389,7 @@ export class ChatsPage extends Block {
                     }
                 })
             }),
-            messageInput: new Input({
+            messageInput: new MessageInput({
                 id: 'message-input',
                 name: "message-input",
                 type: "text",
