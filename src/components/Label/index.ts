@@ -7,13 +7,7 @@ interface LabelProps {
 }
 
 export class Label extends Block<LabelProps> {
-    constructor(props: any) {
-        super({
-            ...props,
-        });
-    }
-
-    override render() {
+    render() {
         return `<label 
              for="{{for}}" 
              class="label"

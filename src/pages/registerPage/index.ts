@@ -7,10 +7,14 @@ import {errorMessage} from "../../components/errorMessage";
 import * as utils from '../../utils/validators'
 import * as messages from '../../utils/constances'
 import {getFormData} from "../../utils/helpFunctions";
+import {AuthController} from "../../controllers/auth-controller";
+import {SignUpData} from '../../utils/types';
+import {State} from "../../services/Store";
+import {connect} from "../../services/HOC";
 
 
 export class RegisterPage extends Block {
-    constructor(changePage: (page: string) => void) {
+    constructor() {
         super({
             emailLabel: new Label({
                 for:"email-input",
@@ -26,10 +30,10 @@ export class RegisterPage extends Block {
                     const emailValue = (event.target as HTMLInputElement).value;
                     if (utils.validateEmail(emailValue)) {
                         console.log('Email is valid');
-                        this.children.errorMessageEmail.setProps({error: ""});
+                        (this.children.errorMessageEmail as Block).setProps({error: ""});
                     } else {
                         console.log('Email is invalid');
-                        this.children.errorMessageEmail.setProps({error: messages.wrongEmail})
+                        (this.children.errorMessageEmail as Block).setProps({error: messages.wrongEmail})
                     }
                     event.preventDefault();
                     event.stopPropagation();
@@ -52,10 +56,10 @@ export class RegisterPage extends Block {
                     const loginValue = (event.target as HTMLInputElement).value;
                     if (utils.validateLogin(loginValue)) {
                         console.log('Login is valid');
-                        this.children.errorMessageLogin.setProps({error: ""});
+                        (this.children.errorMessageLogin as Block).setProps({error: ""});
                     } else {
                         console.log('Login is invalid');
-                        this.children.errorMessageLogin.setProps({error: messages.wrongLogin})
+                        (this.children.errorMessageLogin as Block).setProps({error: messages.wrongLogin})
                     }
                     event.preventDefault();
                     event.stopPropagation();
@@ -78,10 +82,10 @@ export class RegisterPage extends Block {
                     const firstNameValue = (event.target as HTMLInputElement).value;
                     if (utils.validateName(firstNameValue)) {
                         console.log('First name is valid');
-                        this.children.errorMessageFirstname.setProps({error: ""});
+                        (this.children.errorMessageFirstname as Block).setProps({error: ""});
                     } else {
                         console.log('First name invalid');
-                        this.children.errorMessageFirstname.setProps({error: messages.wrongName})
+                        (this.children.errorMessageFirstname as Block).setProps({error: messages.wrongName})
                     }
                     event.preventDefault();
                     event.stopPropagation();
@@ -104,10 +108,10 @@ export class RegisterPage extends Block {
                     const lastNameValue = (event.target as HTMLInputElement).value;
                     if (utils.validateName(lastNameValue)) {
                         console.log('Last name is valid');
-                        this.children.errorMessageLastname.setProps({error: ""});
+                        (this.children.errorMessageLastname as Block).setProps({error: ""});
                     } else {
                         console.log('Last name invalid');
-                        this.children.errorMessageLastname.setProps({error: messages.wrongName})
+                        (this.children.errorMessageLastname as Block).setProps({error: messages.wrongName})
                     }
                     event.preventDefault();
                     event.stopPropagation();
@@ -130,10 +134,10 @@ export class RegisterPage extends Block {
                     const phoneValue = (event.target as HTMLInputElement).value;
                     if (utils.validatePhone(phoneValue)) {
                         console.log('Phone is valid');
-                        this.children.errorMessagePhone.setProps({error: ""});
+                        (this.children.errorMessagePhone as Block).setProps({error: ""});
                     } else {
                         console.log('Phone name invalid');
-                        this.children.errorMessagePhone.setProps({error: messages.wrongPhone})
+                        (this.children.errorMessagePhone as Block).setProps({error: messages.wrongPhone})
                     }
                     event.preventDefault();
                     event.stopPropagation();
@@ -156,10 +160,10 @@ export class RegisterPage extends Block {
                     const passwordValue = (event.target as HTMLInputElement).value;
                     if (utils.validatePassword(passwordValue)) {
                         console.log('Password is valid');
-                        this.children.errorMessagePassword.setProps({error: ""});
+                        (this.children.errorMessagePassword as Block).setProps({error: ""});
                     } else {
                         console.log('Password name invalid');
-                        this.children.errorMessagePassword.setProps({error: messages.wrongPassword})
+                        (this.children.errorMessagePassword as Block).setProps({error: messages.wrongPassword})
                     }
                     event.preventDefault();
                     event.stopPropagation();
@@ -183,10 +187,10 @@ export class RegisterPage extends Block {
                     const password2Value = (event.target as HTMLInputElement).value;
                     if (password1Value === password2Value) {
                         console.log('Пароли совпадают');
-                        this.children.errorMessagePassword2.setProps({error: ""});
+                        (this.children.errorMessagePassword2 as Block).setProps({error: ""});
                     } else {
                         console.log('Пароли не сопадают');
-                        this.children.errorMessagePassword2.setProps({error: messages.wrongPassword2})
+                        (this.children.errorMessagePassword2 as Block).setProps({error: messages.wrongPassword2})
                     }
                     event.preventDefault();
                     event.stopPropagation();
@@ -198,7 +202,7 @@ export class RegisterPage extends Block {
             registerButton: new Button({
                 text: "Зарегистрироваться",
                 id: "submit-register",
-                onClick: (event: Event) => {
+                onClick: async (event: Event) => {
                     console.log('CLICK Submit button');
                     const emailValue = (document.querySelector('#email-input') as HTMLInputElement).value;
                     const loginValue = (document.querySelector('#login-input') as HTMLInputElement).value;
@@ -222,7 +226,9 @@ export class RegisterPage extends Block {
                         if (form) {
                             const formData = getFormData(form);
                             console.log(formData);
-                            changePage('chats')
+                            if (formData) {
+                                await AuthController.signup(formData as unknown as SignUpData);
+                            }
                         }
                     } else {
                         console.log('Необходимо правильно заполнить данные');
@@ -232,15 +238,9 @@ export class RegisterPage extends Block {
                     }
             }),
             registerLink: new Link({
-                href: "#",
+                href: "/",
                 class: "login-link",
                 text: "Войти",
-                onClick: (event: Event) => {
-                    console.log('CLICK');
-                    changePage('authorize')
-                    event.preventDefault();
-                    event.stopPropagation();
-                },
             }),
         });
     }
@@ -282,3 +282,7 @@ export class RegisterPage extends Block {
                     `;
     }
 }
+
+const mapStateToProps = (state: State) => ({ user: state.user });
+
+export const RegisterWithProps = connect(mapStateToProps)(RegisterPage);

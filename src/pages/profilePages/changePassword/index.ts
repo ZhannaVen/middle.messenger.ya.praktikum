@@ -5,17 +5,21 @@ import * as utils from "../../../utils/validators";
 import {Button} from "../../../components/Button";
 import {errorMessage} from "../../../components/errorMessage";
 import * as messages from "../../../utils/constances";
+import router from "../../../services/Router";
+import {Urls} from "../../../utils/types";
+import {ProfileController} from "../../../controllers/profile-controller";
+import { PasswordData } from '../../../utils/types';
 
 
 export class ChangePasswordPage extends Block {
-    constructor(changePage: (page: string) => void) {
+    constructor() {
         super({
             chatsButton: new Button({
                 text: "<-",
                 id: "chats-button",
                 onClick: (event: Event) => {
                     console.log('CLICK Chats button');
-                    changePage('chats');
+                    router.go(Urls.Chats)
                     event.preventDefault();
                     event.stopPropagation();
                 }
@@ -23,7 +27,7 @@ export class ChangePasswordPage extends Block {
             saveButton: new Button({
                 text: "Сохранить",
                 id: "submit-save",
-                onClick: (event: Event) => {
+                onClick: async (event: Event) => {
                     console.log('CLICK Save button');
                     const password1Value = (document.querySelector('#profile-newpassword-input') as HTMLInputElement).value;
                     const password2Value = (document.querySelector('#profile-newpassword2-input') as HTMLInputElement).value;
@@ -32,7 +36,13 @@ export class ChangePasswordPage extends Block {
                         (password1Value === password2Value)
                     ) {
                         console.log('Данные провалидированы');
-                        changePage('chats')
+                        const passwordData: PasswordData = {
+                            newPassword: (document.querySelector('#profile-newpassword-input') as HTMLInputElement).value,
+                            oldPassword: (document.querySelector('#profile-oldpassword-input') as HTMLInputElement).value,
+                        };
+                        if (passwordData) {
+                            await ProfileController.changePassword(passwordData);
+                        }
                     } else {
                         console.log('Необходимо правильно заполнить данные');
                     }
@@ -61,10 +71,10 @@ export class ChangePasswordPage extends Block {
                     const passwordValue = (event.target as HTMLInputElement).value;
                     if (utils.validatePassword(passwordValue)) {
                         console.log('Password is valid');
-                        this.children.errorMessageNewPassword.setProps({error: ""});
+                        (this.children.errorMessageNewPassword as Block).setProps({error: ""});
                     } else {
                         console.log('Password name invalid');
-                        this.children.errorMessageNewPassword.setProps({error: messages.wrongPassword})
+                        (this.children.errorMessageNewPassword as Block).setProps({error: messages.wrongPassword})
                     }
                     event.preventDefault();
                     event.stopPropagation();
@@ -84,10 +94,10 @@ export class ChangePasswordPage extends Block {
                     const password2Value = (event.target as HTMLInputElement).value;
                     if (password1Value === password2Value) {
                         console.log('Пароли совпадают');
-                        this.children.errorMessageNewPassword2.setProps({error: ""});
+                        (this.children.errorMessageNewPassword2 as Block).setProps({error: ""});
                     } else {
                         console.log('Пароли не сопадают');
-                        this.children.errorMessageNewPassword.setProps({error: messages.wrongPassword2})
+                        (this.children.errorMessageNewPassword as Block).setProps({error: messages.wrongPassword2})
                     }
                     event.preventDefault();
                     event.stopPropagation();

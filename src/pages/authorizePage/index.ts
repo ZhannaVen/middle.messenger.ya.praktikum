@@ -7,14 +7,18 @@ import {errorMessage} from "../../components/errorMessage";
 import * as utils from "../../utils/validators";
 import {getFormData} from "../../utils/helpFunctions";
 import * as messages from "../../utils/constances";
-
+import {AuthController} from "../../controllers/auth-controller";
+import { SignInData} from '../../utils/types';
+import {State} from "../../services/Store";
+import {connect} from "../../services/HOC";
+// import {ProfilePage} from "../profilePages/showUserInfo";
 
 
 export class AuthorizePage extends Block {
-    constructor(changePage: (page: string) => void) {
+    constructor() {
         super({
             loginLabel: new Label({
-                forAttr: "login-input",
+                for: "login-input",
                 text: "Логин"
             }),
             loginInput: new Input({
@@ -26,12 +30,12 @@ export class AuthorizePage extends Block {
                     console.log('login blur');
                     const loginValue = (event.target as HTMLInputElement).value;
                     if (utils.validateLogin(loginValue)) {
-                        console.log('Login is valid')
-                        this.children.errorMessageLogin.setProps({error: ""});
+                        console.log('Login is valid');
+                        (this.children.errorMessageLogin as Block).setProps({error: ""});
 
                     } else {
                         console.log('Login is invalid');
-                        this.children.errorMessageLogin.setProps({error: messages.wrongLogin})
+                        (this.children.errorMessageLogin as Block).setProps({error: messages.wrongLogin})
 
                     }
                     event.preventDefault();
@@ -42,7 +46,7 @@ export class AuthorizePage extends Block {
                 error: ""
             }),
             passwordLabel: new Label({
-                forAttr: "password-input",
+                for: "password-input",
                 text: "Пароль"
             }),
             passwordInput: new Input({
@@ -55,10 +59,10 @@ export class AuthorizePage extends Block {
                     const passwordValue = (event.target as HTMLInputElement).value;
                     if (utils.validatePassword(passwordValue)) {
                         console.log('Password is valid');
-                        this.children.errorMessagePassword.setProps({error: ""});
+                        (this.children.errorMessagePassword as Block).setProps({error: ""});
                     } else {
                         console.log('Password name invalid');
-                        this.children.errorMessagePassword.setProps({error: messages.wrongPassword});
+                        (this.children.errorMessagePassword as Block).setProps({error: messages.wrongPassword});
                     }
                     event.preventDefault();
                     event.stopPropagation();
@@ -70,7 +74,7 @@ export class AuthorizePage extends Block {
             authorizeButton: new Button({
                 id:"submit-authorization",
                 text:"Авторизоваться",
-                onClick: (event: Event) => {
+                onClick: async (event: Event) => {
                     console.log('CLICK Submit button');
                     const loginValue = (document.querySelector('#login-input') as HTMLInputElement).value;
                     const passwordValue = (document.querySelector('#password-input') as HTMLInputElement).value;
@@ -84,7 +88,7 @@ export class AuthorizePage extends Block {
                         if (form) {
                             const formData = getFormData(form);
                             console.log(formData);
-                            changePage('chats')
+                            await AuthController.signin(formData as unknown as SignInData);
                         }
                     } else {
                         console.log('Необходимо правильно заполнить данные');
@@ -94,23 +98,16 @@ export class AuthorizePage extends Block {
                 }
             }),
             registerLink: new Link({
-                href: '#',
+                href: '/sign-up',
                 'data-page': 'register',
                 text: 'Нет аккаунта?',
                 class: 'register-link',
-                onClick: (event: Event) => {
-                    console.log('CLICK');
-                    changePage('register');
-                    event.preventDefault();
-                    event.stopPropagation();
-
-                },
             }),
         });
     }
 
-    override render(): string {
-        return `
+    render() {
+        return (`
                  <div id="app">
                     <main class="login-container">
                       <h1>Вход</h1>
@@ -126,6 +123,10 @@ export class AuthorizePage extends Block {
                        </form>
                     </main>
                  </div>
-                     `;
+                     `);
     }
 }
+
+const mapStateToProps = (state: State) => ({ user: state.user });
+
+export const AuthorizeWithProps = connect(mapStateToProps)(AuthorizePage);
