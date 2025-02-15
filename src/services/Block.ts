@@ -1,4 +1,4 @@
-import EventBus from './EventBus';
+import EventBus from './EventBus.js';
 import Handlebars from 'handlebars';
 import { v4 as uuidv4func } from 'uuid';
 
@@ -67,7 +67,6 @@ export default class Block<Props extends BlockProps = any> {
     }
 
     protected componentDidMount() {
-        console.log("Block mounted")
     }
 
     public dispatchComponentDidMount() {
@@ -120,12 +119,8 @@ export default class Block<Props extends BlockProps = any> {
         return this._element;
     }
     private _render() {
-        console.log('Render');
-
         this._removeEvents();
-
         const template = this.render()
-
         const propsAndStubs = { ...this.props } as Record<string, unknown>;
         Object.entries(this.children).forEach(([name, component]) => {
             if (Array.isArray(component)) {

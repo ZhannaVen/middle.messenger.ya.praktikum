@@ -1,4 +1,4 @@
-import { merge } from './merge';
+import { merge } from './merge.js';
 
 type Indexed<T = Record<string, unknown>> = {
     [key in string]: T;

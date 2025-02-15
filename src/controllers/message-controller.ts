@@ -1,7 +1,7 @@
-import store from "../services/Store";
-import {WebSocketEvents, WebSocketTransport} from '../services/WebSocket';
-import {MessageData} from '../utils/types';
-import {ChatsController} from "./chat-controller";
+import store from "../services/Store.js";
+import {WebSocketEvents, WebSocketTransport} from '../services/WebSocket.js';
+import {MessageData} from '../utils/types.js';
+import {ChatsController} from "./chat-controller.js";
 
 export class MessagesController {
     private static transports: Map<number, WebSocketTransport> = new Map();

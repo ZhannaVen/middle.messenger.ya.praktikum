@@ -1,6 +1,6 @@
-import store, {State, StoreEvents} from '../services/Store';
-import Block from '../services/Block';
-import {isEqual} from '../utils/isEqual';
+import store, {State, StoreEvents} from '../services/Store.js';
+import Block from '../services/Block.js';
+import {isEqual} from '../utils/isEqual.js';
 
 
 export const connect = (mapStateToProps: (state: State) => any) => <P extends Record<string, unknown>>(Component: typeof Block<P>) => class extends Component {

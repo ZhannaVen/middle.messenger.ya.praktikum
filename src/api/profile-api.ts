@@ -1,5 +1,5 @@
-import {BaseAPI} from "./base-api";
-import {PasswordData, ProfileData} from '../utils/types';
+import {BaseAPI} from "./base-api.js";
+import {PasswordData, ProfileData} from '../utils/types.js';
 
 export class ProfileAPI extends BaseAPI {
     constructor() {

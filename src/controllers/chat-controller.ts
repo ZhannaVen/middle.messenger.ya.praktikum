@@ -1,7 +1,7 @@
-import chatsAPI from '../api/chats-api';
-import store from "../services/Store";
-import {Chat, ChatMember} from '../utils/types';
-import {MessagesController} from './message-controller';
+import chatsAPI from '../api/chats-api.js';
+import store from "../services/Store.js";
+import {Chat, ChatMember} from '../utils/types.js';
+import {MessagesController} from './message-controller.js';
 
 export class ChatsController {
 

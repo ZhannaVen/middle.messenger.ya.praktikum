@@ -126,7 +126,6 @@ export class ChangeProfileDataPage extends Block {
                 type: "text",
                 placeholder: mockProfile.login,
                 onBlur: (event: Event) => {
-                    console.log('login blur');
                     const loginValue = (event.target as HTMLInputElement).value;
                     if (loginValue) {
                         if (utils.validateLogin(loginValue)) {

@@ -1,4 +1,3 @@
-import './polyfills.js';
 import './styles/main.pcss';
 import router from "./services/Router";
 import {Urls} from "./utils/types";
