@@ -19,11 +19,9 @@ export class MessageInput extends Block<InputProps> {
             ...props,
             events: {
                 blur: (e: Event) => {
-                    console.log('blur input');
                     props.onBlur(e);
                 },
                 keydown: (e: KeyboardEvent) => {
-                    console.log('keydown input');
                     props.onKeyDown(e);
                 },
             },

@@ -1,4 +1,4 @@
-import {BaseAPI} from "./base-api";
+import {BaseAPI} from "./base-api.js";
 
 class ChatsAPI extends BaseAPI {
     constructor() {

@@ -1,4 +1,4 @@
-import EventBus from "./EventBus";
+import EventBus from "./EventBus.js";
 
 export enum WebSocketEvents {
     Close = 'close',

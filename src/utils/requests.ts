@@ -1,4 +1,4 @@
-import { queryStringify } from './queryStringify';
+import { queryStringify } from './queryStringify.js';
 
 enum METHODS {
     GET = 'GET',

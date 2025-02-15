@@ -1,16 +1,16 @@
-import Block from '../../services/Block';
-import {Link} from '../../components/Link';
-import {Label} from '../../components/Label';
-import {Input} from '../../components/Input';
-import {Button} from '../../components/Button';
-import {errorMessage} from "../../components/errorMessage";
-import * as utils from '../../utils/validators'
-import * as messages from '../../utils/constances'
-import {getFormData} from "../../utils/helpFunctions";
-import {AuthController} from "../../controllers/auth-controller";
-import {SignUpData} from '../../utils/types';
-import {State} from "../../services/Store";
-import {connect} from "../../services/HOC";
+import Block from '../../services/Block.js';
+import {Link} from '../../components/Link/index.js';
+import {Label} from '../../components/Label/index.js';
+import {Input} from '../../components/Input/index.js';
+import {Button} from '../../components/Button/index.js';
+import {errorMessage} from "../../components/errorMessage/index.js";
+import * as utils from '../../utils/validators.js'
+import * as messages from '../../utils/constances.js'
+import {getFormData} from "../../utils/helpFunctions.js";
+import {AuthController} from "../../controllers/auth-controller.js";
+import {SignUpData} from '../../utils/types.js';
+import {State} from "../../services/Store.js";
+import {connect} from "../../services/HOC.js";
 
 
 export class RegisterPage extends Block {
@@ -52,7 +52,6 @@ export class RegisterPage extends Block {
                 type: "text",
                 placeholder: "ivanivanov",
                 onBlur: (event: Event) => {
-                    console.log('login blur');
                     const loginValue = (event.target as HTMLInputElement).value;
                     if (utils.validateLogin(loginValue)) {
                         console.log('Login is valid');
@@ -247,7 +246,6 @@ export class RegisterPage extends Block {
 
     override render(): string {
         return `
-                <div id="app">
                     <main class="login-container">
                         <h1>Регистрация</h1>
                         <form class="login-form">
@@ -278,7 +276,6 @@ export class RegisterPage extends Block {
                               {{{ registerLink }}}
                         </form>
                     </main>
-                </div>
                     `;
     }
 }

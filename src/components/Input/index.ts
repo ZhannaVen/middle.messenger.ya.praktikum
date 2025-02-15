@@ -1,4 +1,4 @@
-import Block from '../../services/Block';
+import Block from '../../services/Block.js';
 
 interface InputProps {
     id: string;
@@ -17,7 +17,6 @@ export class Input extends Block<InputProps> {
             ...props,
             events: {
                 blur: (e: Event) => {
-                    console.log('blur input');
                     props.onBlur(e);
                 },
             },

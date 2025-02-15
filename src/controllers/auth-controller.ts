@@ -1,8 +1,8 @@
-import authAPI from '../api/auth-api';
-import {SignInData, SignUpData, Urls, UserInfo,} from '../utils/types';
-import store from '../services/Store';
-import router from "../services/Router";
-import {ChatsController} from "./chat-controller";
+import authAPI from '../api/auth-api.js';
+import {SignInData, SignUpData, Urls, UserInfo,} from '../utils/types.js';
+import store from '../services/Store.js';
+import router from "../services/Router.js";
+import {ChatsController} from "./chat-controller.js";
 
 export class AuthController {
 

@@ -1,6 +1,6 @@
-import EventBus from "./EventBus";
-import {set} from "../utils/set";
-import {Chat, MessageData, UserInfo} from '../utils/types';
+import EventBus from "./EventBus.js";
+import {set} from "../utils/set.js";
+import {Chat, MessageData, UserInfo} from '../utils/types.js';
 
 
 export interface State {

@@ -1,4 +1,4 @@
-import Block from "./Block";
+import Block from "./Block.js";
 
 
 function isEqual(lhs: string, rhs: string) {
@@ -43,9 +43,7 @@ class Route {
     }
 
     leave() {
-        if (this._block) {
-            this._block.hide();
-        }
+        this._block = null;
     }
 
     match(pathname: string) {
@@ -64,7 +62,7 @@ class Route {
     }
 }
 
-class Router {
+export class Router {
     private routes: Route[] = [];
 
     private static __instance: Router;
@@ -95,7 +93,6 @@ class Router {
     }
 
     start() {
-        console.log("Router start() called");
         window.onpopstate = ((event: PopStateEvent) => {
             const target = event.currentTarget as Window;
             this._onRoute(target.location.pathname);
@@ -105,7 +102,6 @@ class Router {
     }
 
     private _onRoute(pathname: string) {
-        console.log('Роутер: обрабатываю маршрут', pathname);
         const route = this.getRoute(pathname);
         if (!route) {
             console.warn('Роутер: маршрут не найден для', pathname);
@@ -113,12 +109,10 @@ class Router {
         }
 
         if (this._currentRoute && this._currentRoute !== route) {
-            console.log('Роутер: скрываю предыдущий маршрут');
             this._currentRoute.leave();
         }
 
         this._currentRoute = route;
-        console.log('Роутер: рендерю новый маршрут');
         route.render();
     }
 
@@ -137,6 +131,11 @@ class Router {
 
     getRoute(pathname: string) {
         return this.routes.find(route => route.match(pathname));
+    }
+
+    reset() {
+        this.routes = [];
+        this._currentRoute = null;
     }
 }
 

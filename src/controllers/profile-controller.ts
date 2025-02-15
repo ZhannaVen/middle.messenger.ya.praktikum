@@ -1,8 +1,8 @@
-import {ExtendedProfileData, PasswordData, ProfileData, Urls} from '../utils/types';
-import ProfileAPI from "../api/profile-api";
-import store from '../services/Store';
-import router from "../services/Router";
-import {AuthController} from "./auth-controller";
+import {ExtendedProfileData, PasswordData, ProfileData, Urls} from '../utils/types.js';
+import ProfileAPI from "../api/profile-api.js";
+import store from '../services/Store.js';
+import router from "../services/Router.js";
+import {AuthController} from "./auth-controller.js";
 
 export class ProfileController {
     static async changeProfile(data: ProfileData) {

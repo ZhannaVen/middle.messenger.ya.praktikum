@@ -1,5 +1,5 @@
-import {BaseAPI} from "./base-api";
-import {SignInData, SignUpData, UserInfo} from '../utils/types';
+import {BaseAPI} from "./base-api.js";
+import {SignInData, SignUpData, UserInfo} from '../utils/types.js';
 
 class AuthAPI extends BaseAPI {
     constructor() {

@@ -1,4 +1,4 @@
-import Block from '../../services/Block';
+import Block from '../../services/Block.js';
 
 interface LinkProps {
     href: string;
