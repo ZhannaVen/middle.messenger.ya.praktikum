@@ -12,7 +12,8 @@
     "build": "vite build",
     "start": "vite build && node server.cjs",
     "test": "mocha --reporter spec --extension ts 'src/**/*.test.ts'",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
